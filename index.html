@@ -21,16 +21,18 @@
 
 .w{font-family:'Aller',sans-serif;font-weight:300;padding:1.5rem 1rem 2rem;max-width:700px;color:#000;margin:0 auto}
 
-.wh{margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between}
-.wh h2{font-size:20px;font-weight:700;color:var(--g);letter-spacing:-.01em}
-.pub-badge{font-size:10px;font-weight:700;letter-spacing:.08em;color:#1a9fcc;text-transform:uppercase;white-space:nowrap}
+.wh{margin-bottom:1.25rem;display:flex;align-items:flex-start;justify-content:space-between}
+.wh h2{line-height:1;font-size:20px;font-weight:700;color:var(--g);letter-spacing:-.01em}
+.wh-meta{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.wh-tag{font-size:10px;font-weight:700;letter-spacing:.08em;color:#1A9FCC;text-transform:uppercase;line-height:1}
+.wh-sub{font-size:10px;font-weight:300;color:#969696;line-height:1.3;white-space:nowrap}
 
-.tabs{display:flex;gap:5px;margin-bottom:1.25rem;padding-bottom:1.1rem;border-bottom:1px solid var(--gr4);flex-wrap:wrap;align-items:center}
+.mfo-tabs{display:flex;gap:5px;margin:0 0 1.25rem;padding-bottom:1.1rem;border-bottom:1px solid var(--gr4);flex-wrap:wrap;align-items:center}
 .tb,.tbg{padding:6px 14px;font-size:12px;border-radius:4px;cursor:pointer;transition:all .15s;border:none}
 .tb{font-weight:300;border:1px solid var(--gr3)!important;background:transparent;color:#000}
 .tb:hover{background:var(--gr4)}
 .tb.active{background:var(--sl);border-color:var(--sl)!important;color:#fff;font-weight:700}
-.tbg{font-weight:300;border:1px solid var(--g2)!important;background:transparent;color:var(--sl)}
+.tbg{font-weight:300;border:1px solid var(--g2)!important;background:transparent;color:var(--sl);margin-left:auto}
 .tbg:hover{background:var(--g4)}
 .tbg.active{background:var(--g);border-color:var(--g)!important;color:#fff;font-weight:700}
 .older-wrap{position:relative;display:inline-block}
@@ -45,13 +47,12 @@
 .mp{display:none}.mp.active{display:block}
 .vtag{font-size:9px;font-weight:700;color:var(--sl);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
 
-.strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
-.mc-sm{background:var(--cb);border-radius:6px;padding:9px 11px;border:1px solid #d4d4d4;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.mc-sm{background:var(--cb);border-radius:6px;padding:10px;border:1px solid #d4d4d4;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .mc-sm .ml{font-size:9px;color:var(--sl);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-weight:300}
 .mc-sm .mv{font-size:17px;font-weight:700;color:#000;line-height:1}
 .mc-sm .ms{font-size:10.5px;color:var(--sl);margin-top:4px;font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-.tr{display:flex;gap:7px;margin-bottom:10px;align-items:stretch}
+.tr{display:flex;gap:7px;margin-bottom:16px;align-items:stretch}
 .mc{background:var(--cb);border-radius:6px;padding:10px;border:1px solid #d4d4d4}
 .ml{font-size:9px;color:var(--sl);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-weight:300}
 .mv{font-size:16px;font-weight:700;color:#000;line-height:1}
@@ -59,17 +60,17 @@
 .mc.ffr{min-width:120px;flex-shrink:0}
 .mgrp{border:1px solid #d4d4d4;border-radius:6px;padding:8px 10px 10px;flex:1}
 .mgrp-title{font-size:9px;color:var(--sl);text-transform:uppercase;letter-spacing:.06em;font-weight:300;margin-bottom:7px}
-.mgrp-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.mgrp-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .bh{display:inline-block;font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;background:var(--sl);color:#fff}
 
-.exec{background:#EAF0F5;border:1px solid #C7D3DC;border-radius:8px;padding:13px 16px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.exec{background:#EAF0F5;border:1px solid #C7D3DC;border-radius:8px;padding:13px 16px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 .exec-t{font-size:10.5px;font-weight:700;color:#34495E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px}
 .exec ul{list-style:none;display:flex;flex-direction:column;gap:10px}
 .exec li{position:relative;padding-left:14px;font-size:11.5px;line-height:1.5;color:#24313d;font-weight:300}
 .exec li::before{content:'';position:absolute;left:0;top:5px;width:0;height:0;border-style:solid;border-width:4px 0 4px 6px;border-color:transparent transparent transparent #34495E}
 .exec li b{font-weight:700}
 
-.sec{background:#fff;border:1px solid var(--gr4);border-radius:6px;padding:13px 15px;margin-bottom:8px}
+.sec{background:#fff;border:1px solid var(--gr4);border-radius:6px;padding:13px 15px;margin-bottom:16px}
 .st{font-size:10px;font-weight:700;color:#000;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--gr4)}
 
 .pl{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:2px}
@@ -168,7 +169,11 @@
   <!-- ====================== HEADER ====================== -->
   <div class="wh">
     <h2>US CPI Tracker</h2>
-    <span class="pub-badge">INFORMACIÓN PÚBLICA</span>
+    <div class="wh-meta">
+      <span class="wh-tag">Información pública</span>
+      <span class="wh-sub">Periodicidad: Mensual</span>
+      <span class="wh-sub">Última actualización: 12 ago 2026</span>
+    </div>
   </div>
 
   <!-- ====================== TABS ======================
@@ -186,7 +191,7 @@
           from most recent to oldest.
        4) Add the month to MMONTHS (at the front) and its object in
           MDATA so it also shows up on the "Evolution" tab. -->
-  <div class="tabs" id="tabs">
+  <div class="mfo-tabs" id="tabs">
     <button class="tb active" onclick="sp('jul26',this)">Jul 26</button>
     <button class="tb" onclick="sp('jun26',this)">Jun 26</button>
     <button class="tb" onclick="sp('may26',this)">May 26</button>
