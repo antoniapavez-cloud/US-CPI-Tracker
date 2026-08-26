@@ -32,7 +32,8 @@
 .tb{font-weight:300;border:1px solid var(--gr3)!important;background:transparent;color:#000}
 .tb:hover{background:var(--gr4)}
 .tb.active{background:var(--sl);border-color:var(--sl)!important;color:#fff;font-weight:700}
-.tbg{font-weight:300;border:1px solid var(--g2)!important;background:transparent;color:var(--sl);margin-left:auto}
+.tbg{font-weight:300;border:1px solid var(--g2)!important;background:transparent;color:var(--sl)}
+.tbg-first{margin-left:auto}
 .tbg:hover{background:var(--g4)}
 .tbg.active{background:var(--g);border-color:var(--g)!important;color:#fff;font-weight:700}
 .older-wrap{position:relative;display:inline-block}
@@ -94,7 +95,7 @@
 .kvn{font-size:12px;color:#000;font-weight:300;line-height:1.4}
 
 .spb{background:var(--gr4);border-radius:5px;overflow:hidden}
-.spr{display:grid;grid-template-columns:180px 90px 1fr;column-gap:10px;padding:7px 12px;border-bottom:1px solid #d8d8d8;align-items:center}
+.spr{display:grid;grid-template-columns:175px 55px 1fr;gap:0;padding:7px 12px;border-bottom:1px solid #d8d8d8;align-items:center}
 .spr:last-child{border-bottom:none}
 .spl{font-size:12px;color:var(--sl);font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .spv{font-size:12px;font-weight:700;color:#000;text-align:center;white-space:nowrap}
@@ -204,7 +205,7 @@
         <button class="older-item" onclick="sp('ene26',this,'older')">Jan '26</button>
       </div>
     </div>
-    <button class="tbg" onclick="sp('matrix',this)">Evolution</button>
+    <button class="tbg tbg-first" onclick="sp('matrix',this)">Evolution</button>
   </div>
 
   <!-- ====================== PANEL JULY 2026 ====================== -->
