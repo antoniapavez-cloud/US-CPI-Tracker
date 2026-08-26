@@ -180,28 +180,28 @@
        The 6 most recent months are shown as direct tabs;
        older months live in the "History" dropdown (.older-wrap).
 
-       To add a new month (e.g. Aug' 26):
+       To add a new month (e.g. Aug '26):
        1) Add its <div class="mp" id="panel-XXX"> (duplicate an existing one).
        2) Add a new .tb button at the front of the 6 fixed tabs
           with sp('aug26',this).
-       3) The oldest fixed tab (currently Feb' 26) moves into the
+       3) The oldest fixed tab (currently Feb '26) moves into the
           dropdown: place it inside #olderMenu as <button
-          class="older-item" onclick="sp('feb26',this,'older')">Feb' 26</button>
+          class="older-item" onclick="sp('feb26',this,'older')">Feb '26</button>
           — inserted at the very top of the menu, so it stays ordered
           from most recent to oldest.
        4) Add the month to MMONTHS (at the front) and its object in
           MDATA so it also shows up on the "Evolution" tab. -->
   <div class="mfo-tabs" id="tabs">
-    <button class="tb active" onclick="sp('jul26',this)">Jul' 26</button>
-    <button class="tb" onclick="sp('jun26',this)">Jun' 26</button>
-    <button class="tb" onclick="sp('may26',this)">May' 26</button>
-    <button class="tb" onclick="sp('abr26',this)">Apr' 26</button>
-    <button class="tb" onclick="sp('mar26',this)">Mar' 26</button>
-    <button class="tb" onclick="sp('feb26',this)">Feb' 26</button>
+    <button class="tb active" onclick="sp('jul26',this)">Jul '26</button>
+    <button class="tb" onclick="sp('jun26',this)">Jun '26</button>
+    <button class="tb" onclick="sp('may26',this)">May '26</button>
+    <button class="tb" onclick="sp('abr26',this)">Apr '26</button>
+    <button class="tb" onclick="sp('mar26',this)">Mar '26</button>
+    <button class="tb" onclick="sp('feb26',this)">Feb '26</button>
     <div class="older-wrap">
       <button class="older-btn" id="olderBtn" onclick="toggleOlder(event)">History ▾</button>
       <div class="older-menu" id="olderMenu">
-        <button class="older-item" onclick="sp('ene26',this,'older')">Jan' 26</button>
+        <button class="older-item" onclick="sp('ene26',this,'older')">Jan '26</button>
       </div>
     </div>
     <button class="tbg" onclick="sp('matrix',this)">Evolution</button>
@@ -278,7 +278,7 @@
         <li><b>Energy plunged 5.7%</b> (gasoline -9.7%), the main driver of the headline decline.</li>
         <li><b>Core inflation did not move (0.0%)</b>; within shelter, rent rose just 0.1%, the smallest monthly change since January 2021.</li>
         <li>Year-over-year inflation eased to <b>3.5%</b> from 4.2% in May, the sharpest deceleration in recent months.</li>
-        <li>Next release: <b>August 12, 2026</b> (July data) — already available under the "Jul' 26" tab.</li>
+        <li>Next release: <b>August 12, 2026</b> (July data) — already available under the "Jul '26" tab.</li>
       </ul>
     </div>
 
@@ -328,7 +328,7 @@
         <li><b>Year-over-year inflation accelerated to 4.2%</b> from 3.8% in April — the highest level since 2023.</li>
         <li><b>Core inflation decelerated to +0.2%</b> monthly (vs. 0.4% in April); shelter rose just 0.3%.</li>
         <li><b>Energy rose again (+3.9%)</b> and accounted for more than sixty percent of the total monthly increase. <b>Motor vehicle insurance plunged 1.7%</b> after rising 0.1% the prior month.</li>
-        <li>Next release: <b>July 14, 2026</b> (June data) — already available under the "Jun' 26" tab.</li>
+        <li>Next release: <b>July 14, 2026</b> (June data) — already available under the "Jun '26" tab.</li>
       </ul>
     </div>
 
@@ -378,7 +378,7 @@
         <li><b>Year-over-year inflation accelerated to 3.8%</b> from 3.3% in March.</li>
         <li><b>Core inflation accelerated to +0.4%</b> monthly (vs. 0.2% in the two prior months); shelter rose 0.6%.</li>
         <li><b>Energy rose 3.8%</b> (much less than March's 10.9%) but still accounted for more than forty percent of the total increase. <b>Airline fares rose 2.8%</b>.</li>
-        <li>Next release: <b>June 10, 2026</b> (May data) — already available under the "May' 26" tab.</li>
+        <li>Next release: <b>June 10, 2026</b> (May data) — already available under the "May '26" tab.</li>
       </ul>
     </div>
 
@@ -428,7 +428,7 @@
         <li><b>Year-over-year inflation surged to 3.3%</b> from 2.4% in February.</li>
         <li><b>Energy rose 10.9%</b>, led by a <b>21.2% spike in gasoline</b> — the series' largest monthly increase since 1967 — which accounted for nearly three-quarters of the total increase.</li>
         <li><b>Core inflation held steady at +0.2%</b> monthly; the year-over-year rate rose to 2.6% from 2.5%. Food was unchanged for the month.</li>
-        <li>Next release: <b>May 12, 2026</b> (April data) — already available under the "Apr' 26" tab.</li>
+        <li>Next release: <b>May 12, 2026</b> (April data) — already available under the "Apr '26" tab.</li>
       </ul>
     </div>
 
@@ -478,7 +478,7 @@
         <li><b>Year-over-year inflation held at 2.4%</b>, same as January.</li>
         <li><b>Core inflation decelerated to +0.2%</b> monthly (vs. 0.3% in January); the year-over-year rate also held at 2.5%.</li>
         <li><b>Shelter (+0.2%)</b> was the main driver of the monthly increase given its weight in the index. <b>Energy rose again (+0.6%)</b> after falling 1.5% in January.</li>
-        <li>Next release: <b>April 10, 2026</b> (March data) — already available under the "Mar' 26" tab.</li>
+        <li>Next release: <b>April 10, 2026</b> (March data) — already available under the "Mar '26" tab.</li>
       </ul>
     </div>
 
@@ -528,7 +528,7 @@
         <li><b>Year-over-year inflation fell to 2.4%</b> from 2.7% in December.</li>
         <li><b>Core inflation accelerated to +0.3%</b> monthly (vs. 0.2% in December); the year-over-year rate held at 2.5%.</li>
         <li><b>Shelter (+0.2%)</b> was the main driver of the monthly increase given its weight in the index. <b>Energy fell 1.5%</b>, led by lower gasoline prices (-3.2%), offsetting much of the increase.</li>
-        <li>Next release: <b>March 11, 2026</b> (February data) — already available under the "Feb' 26" tab.</li>
+        <li>Next release: <b>March 11, 2026</b> (February data) — already available under the "Feb '26" tab.</li>
       </ul>
     </div>
 
