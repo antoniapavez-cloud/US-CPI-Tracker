@@ -138,7 +138,7 @@
 .bb-table tbody tr:hover .bb-topic-cell{background:var(--cb)}
 .bb-topic-name{font-size:12.5px;font-weight:700;color:#000}
 .bb-data-cell{padding:5px 7px;text-align:center;vertical-align:middle}
-.bb-badge{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:5px 10px;border-radius:20px;cursor:pointer;transition:all .15s;border:1px solid transparent;width:140px;white-space:nowrap;font-size:11.5px;font-weight:700}
+.bb-badge{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:5px 10px;border-radius:20px;cursor:pointer;transition:all .15s;border:1px solid transparent;width:116px;white-space:nowrap;font-size:11.5px;font-weight:700}
 .bb-badge:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,0,0,.12)}
 .bb-badge.pos{background:var(--g4);border-color:var(--g2);color:#3D6E1A}
 .bb-badge.neg{background:#fce9e2;border-color:var(--cl);color:#A8411A}
@@ -148,6 +148,24 @@
 .bb-empty-state{padding:50px 20px;text-align:center;color:var(--sl)}
 .bb-empty-state .bb-es-icon{font-size:32px;margin-bottom:10px;opacity:.5}
 .bb-empty-state .bb-es-title{font-size:12.5px;font-weight:700;margin-bottom:4px;color:#000}
+
+.dt-table{border-collapse:collapse;width:auto}
+.dt-table thead th{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#000;padding:0 8px 10px;text-align:center;white-space:nowrap;border-bottom:1px solid var(--gr4);background:#fff}
+.dt-table thead th.dt-cat-h{text-align:left;padding-left:0;min-width:210px;position:sticky;left:0;z-index:3;background:#fff}
+.dt-table thead th.dt-month-h{width:56px;min-width:56px}
+.dt-table thead th.dt-yoy-h{width:64px;min-width:64px}
+.dt-table thead th.dt-latest{color:var(--g)}
+.dt-table tbody tr{border-bottom:1px solid var(--gr4)}
+.dt-table tbody tr:hover{background:var(--cb)}
+.dt-table tbody tr:last-child{border-bottom:none}
+.dt-cat-cell{padding:6px 14px 6px 0;white-space:nowrap;position:sticky;left:0;z-index:2;background:#fff;font-size:12px}
+.dt-table tbody tr:hover .dt-cat-cell{background:var(--cb)}
+.dt-cat-cell.lvl0{font-weight:700;color:#000}
+.dt-cat-cell.lvl1{font-weight:300;color:#000;padding-left:12px}
+.dt-cat-cell.lvl2{font-weight:300;color:var(--sl);padding-left:24px}
+.dt-cat-cell.lvl3{font-weight:300;color:var(--sl);padding-left:36px}
+.dt-num{padding:6px 8px;text-align:center;font-size:12px;font-weight:300;color:#000;white-space:nowrap}
+.dt-num.dt-latest{font-weight:700;color:var(--g)}
 
 .md-overlay{display:none;position:fixed;inset:0;background:rgba(5,7,12,.85);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center}
 .md-overlay.active{display:flex}
@@ -174,38 +192,42 @@
       <span class="wh-tag">Información pública</span>
       <span class="wh-sub">Periodicidad: Mensual</span>
       <span class="wh-sub">Última actualización: 12 ago 2026</span>
+      <span class="wh-sub">Fuente: BLS</span>
     </div>
   </div>
 
   <!-- ====================== TABS ======================
-       The 6 most recent months are shown as direct tabs;
+       The 5 most recent months are shown as direct tabs;
        older months live in the "History" dropdown (.older-wrap).
 
        To add a new month (e.g. Aug '26):
        1) Add its <div class="mp" id="panel-XXX"> (duplicate an existing one).
-       2) Add a new .tb button at the front of the 6 fixed tabs
+       2) Add a new .tb button at the front of the 5 fixed tabs
           with sp('aug26',this).
-       3) The oldest fixed tab (currently Feb '26) moves into the
+       3) The oldest fixed tab (currently Mar '26) moves into the
           dropdown: place it inside #olderMenu as <button
-          class="older-item" onclick="sp('feb26',this,'older')">Feb '26</button>
+          class="older-item" onclick="sp('mar26',this,'older')">Mar '26</button>
           — inserted at the very top of the menu, so it stays ordered
           from most recent to oldest.
        4) Add the month to MMONTHS (at the front) and its object in
-          MDATA so it also shows up on the "Evolution" tab. -->
+          MDATA so it also shows up on the "Evolution" tab, and add its
+          row values to MTABLE_MONTHS/MTABLE_DATA so it also shows up
+          on the "Table" tab. -->
   <div class="mfo-tabs" id="tabs">
     <button class="tb active" onclick="sp('jul26',this)">Jul '26</button>
     <button class="tb" onclick="sp('jun26',this)">Jun '26</button>
     <button class="tb" onclick="sp('may26',this)">May '26</button>
     <button class="tb" onclick="sp('abr26',this)">Apr '26</button>
     <button class="tb" onclick="sp('mar26',this)">Mar '26</button>
-    <button class="tb" onclick="sp('feb26',this)">Feb '26</button>
     <div class="older-wrap">
       <button class="older-btn" id="olderBtn" onclick="toggleOlder(event)">History ▾</button>
       <div class="older-menu" id="olderMenu">
+        <button class="older-item" onclick="sp('feb26',this,'older')">Feb '26</button>
         <button class="older-item" onclick="sp('ene26',this,'older')">Jan '26</button>
       </div>
     </div>
     <button class="tbg tbg-first" onclick="sp('matrix',this)">Evolution</button>
+    <button class="tbg" onclick="sp('table',this)">Table</button>
   </div>
 
   <!-- ====================== PANEL JULY 2026 ====================== -->
@@ -213,12 +235,12 @@
     <div class="vtag">Released Aug 12, 2026</div>
 
     <div class="tr">
-      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.1%<span class="ard" style="font-size:14px">▲</span></div><div class="ms">Year-over-year: <b>3.4%</b></div></div>
+      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.1%<span class="ard" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.4%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
-        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">Year-over-year: 2.5%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.1%</div><div class="ms">Year-over-year: 3.0%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">-1.5%</div><div class="ms">Year-over-year: 14.7%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.1%</div><div class="ms">Year-over-year: 3.2%</div></div>
+        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.5%</div></div>
+        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.1%</div><div class="ms">YoY: 3.0%</div></div>
+        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">-1.5%</div><div class="ms">YoY: 14.7%</div></div>
+        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.1%</div><div class="ms">YoY: 3.2%</div></div>
       </div></div>
     </div>
 
@@ -226,7 +248,7 @@
       <div class="exec-t">Executive Summary</div>
       <ul>
         <li><b>The headline index rose 0.1%</b> in July (seasonally adjusted), following June's 0.4% decline.</li>
-        <li><b>Year-over-year inflation eased to 3.4%</b> from 3.5% in June — the second straight month of deceleration after May's 4.2% peak.</li>
+        <li><b>YoY inflation eased to 3.4%</b> from 3.5% in June — the second straight month of deceleration after May's 4.2% peak.</li>
         <li><b>Core inflation accelerated to +0.2%</b> monthly (vs. 0.0% in June); shelter accounted for roughly two-thirds of the total increase.</li>
         <li><b>Energy fell again (-1.5%)</b>, much less than June's -5.7%. <b>Airline fares jumped +2.2%</b> after rising just 0.2% the prior month.</li>
         <li>Next release: <b>September 11, 2026</b> (August data).</li>
@@ -236,13 +258,13 @@
     <div class="sec">
       <div class="st">Category Detail (seasonally adjusted, MoM)</div>
       <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">-2.9%<span class="ard">↓</span></div><div class="spn">Year-over-year: +24.6%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.2%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-0.3%<span class="ard">↓</span></div><div class="spn">Year-over-year: -4.5% (still declining)</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">+0.4%<span class="aru">↑</span></div><div class="spn">Year-over-year: -1.9%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.2%<span class="aru">↑</span></div><div class="spn">Year-over-year: +25.5%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.4%<span class="aru">↑</span></div><div class="spn">Year-over-year: +1.7%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.9%</div></div>
+        <div class="spr"><div class="spl">Gasoline</div><div class="spv">-2.9%<span class="ard">↓</span></div><div class="spn">YoY: +24.6%</div></div>
+        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.2%</div></div>
+        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-0.3%<span class="ard">↓</span></div><div class="spn">YoY: -4.5% (still declining)</div></div>
+        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">+0.4%<span class="aru">↑</span></div><div class="spn">YoY: -1.9%</div></div>
+        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.2%<span class="aru">↑</span></div><div class="spn">YoY: +25.5%</div></div>
+        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.4%<span class="aru">↑</span></div><div class="spn">YoY: +1.7%</div></div>
+        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">YoY: +3.9%</div></div>
       </div>
     </div>
 
@@ -263,12 +285,12 @@
     <div class="vtag">Released Jul 14, 2026</div>
 
     <div class="tr">
-      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">-0.4%<span class="ard" style="font-size:14px">▼</span></div><div class="ms">Year-over-year: <b>3.5%</b></div></div>
+      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">-0.4%<span class="ard" style="font-size:14px">▼</span></div><div class="ms">YoY: <b>3.5%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
-        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">0.0%</div><div class="ms">Year-over-year: 2.6%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">Year-over-year: 3.0%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">-5.7%</div><div class="ms">Year-over-year: 15.7%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.1%</div><div class="ms">Year-over-year: 3.3%</div></div>
+        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">0.0%</div><div class="ms">YoY: 2.6%</div></div>
+        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.0%</div></div>
+        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">-5.7%</div><div class="ms">YoY: 15.7%</div></div>
+        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.1%</div><div class="ms">YoY: 3.3%</div></div>
       </div></div>
     </div>
 
@@ -278,7 +300,7 @@
         <li><b>The headline index fell 0.4%</b> in June, the largest monthly decline since April 2020, after rising 0.5% in May.</li>
         <li><b>Energy plunged 5.7%</b> (gasoline -9.7%), the main driver of the headline decline.</li>
         <li><b>Core inflation did not move (0.0%)</b>; within shelter, rent rose just 0.1%, the smallest monthly change since January 2021.</li>
-        <li>Year-over-year inflation eased to <b>3.5%</b> from 4.2% in May, the sharpest deceleration in recent months.</li>
+        <li>YoY inflation eased to <b>3.5%</b> from 4.2% in May, the sharpest deceleration in recent months.</li>
         <li>Next release: <b>August 12, 2026</b> (July data) — already available under the "Jul '26" tab.</li>
       </ul>
     </div>
@@ -286,13 +308,13 @@
     <div class="sec">
       <div class="st">Category Detail (seasonally adjusted, MoM)</div>
       <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">-9.7%<span class="ard">↓</span></div><div class="spn">Year-over-year: +26.7%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.3%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-2.0%<span class="ard">↓</span></div><div class="spn">Year-over-year: -4.1%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-0.2%<span class="ard">↓</span></div><div class="spn">Year-over-year: -1.8%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">Year-over-year: +26.5%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">-0.1%<span class="ard">↓</span></div><div class="spn">Year-over-year: +2.0%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">-0.6%<span class="ard">↓</span></div><div class="spn">Year-over-year: +3.9%</div></div>
+        <div class="spr"><div class="spl">Gasoline</div><div class="spv">-9.7%<span class="ard">↓</span></div><div class="spn">YoY: +26.7%</div></div>
+        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
+        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-2.0%<span class="ard">↓</span></div><div class="spn">YoY: -4.1%</div></div>
+        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-0.2%<span class="ard">↓</span></div><div class="spn">YoY: -1.8%</div></div>
+        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +26.5%</div></div>
+        <div class="spr"><div class="spl">Medical care</div><div class="spv">-0.1%<span class="ard">↓</span></div><div class="spn">YoY: +2.0%</div></div>
+        <div class="spr"><div class="spl">Apparel</div><div class="spv">-0.6%<span class="ard">↓</span></div><div class="spn">YoY: +3.9%</div></div>
       </div>
     </div>
 
@@ -313,12 +335,12 @@
     <div class="vtag">Released Jun 10, 2026</div>
 
     <div class="tr">
-      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.5%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">Year-over-year: <b>4.2%</b></div></div>
+      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.5%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>4.2%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
-        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">Year-over-year: 2.9%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">Year-over-year: 3.1%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+3.9%</div><div class="ms">Year-over-year: 23.5%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.3%</div><div class="ms">Year-over-year: 3.4%</div></div>
+        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.9%</div></div>
+        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.1%</div></div>
+        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+3.9%</div><div class="ms">YoY: 23.5%</div></div>
+        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.3%</div><div class="ms">YoY: 3.4%</div></div>
       </div></div>
     </div>
 
@@ -326,7 +348,7 @@
       <div class="exec-t">Executive Summary</div>
       <ul>
         <li><b>The headline index rose 0.5%</b> in May (seasonally adjusted), after rising 0.6% in April.</li>
-        <li><b>Year-over-year inflation accelerated to 4.2%</b> from 3.8% in April — the highest level since 2023.</li>
+        <li><b>YoY inflation accelerated to 4.2%</b> from 3.8% in April — the highest level since 2023.</li>
         <li><b>Core inflation decelerated to +0.2%</b> monthly (vs. 0.4% in April); shelter rose just 0.3%.</li>
         <li><b>Energy rose again (+3.9%)</b> and accounted for more than sixty percent of the total monthly increase. <b>Motor vehicle insurance plunged 1.7%</b> after rising 0.1% the prior month.</li>
         <li>Next release: <b>July 14, 2026</b> (June data) — already available under the "Jun '26" tab.</li>
@@ -336,13 +358,13 @@
     <div class="sec">
       <div class="st">Category Detail (seasonally adjusted, MoM)</div>
       <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+7.0%<span class="aru">↑</span></div><div class="spn">Year-over-year: +40.5%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.3%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-1.7%<span class="ard">↓</span></div><div class="spn">Year-over-year: -2.0%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">Year-over-year: -2.0%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.7%<span class="aru">↑</span></div><div class="spn">Year-over-year: +26.7%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">Year-over-year: +2.6%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">Year-over-year: +4.8%</div></div>
+        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+7.0%<span class="aru">↑</span></div><div class="spn">YoY: +40.5%</div></div>
+        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
+        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-1.7%<span class="ard">↓</span></div><div class="spn">YoY: -2.0%</div></div>
+        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">YoY: -2.0%</div></div>
+        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.7%<span class="aru">↑</span></div><div class="spn">YoY: +26.7%</div></div>
+        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +2.6%</div></div>
+        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +4.8%</div></div>
       </div>
     </div>
 
@@ -363,12 +385,12 @@
     <div class="vtag">Released May 12, 2026</div>
 
     <div class="tr">
-      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.6%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">Year-over-year: <b>3.8%</b></div></div>
+      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.6%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.8%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
-        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.4%</div><div class="ms">Year-over-year: 2.8%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.5%</div><div class="ms">Year-over-year: 3.2%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+3.8%</div><div class="ms">Year-over-year: 17.9%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.6%</div><div class="ms">Year-over-year: 3.3%</div></div>
+        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.4%</div><div class="ms">YoY: 2.8%</div></div>
+        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.5%</div><div class="ms">YoY: 3.2%</div></div>
+        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+3.8%</div><div class="ms">YoY: 17.9%</div></div>
+        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.6%</div><div class="ms">YoY: 3.3%</div></div>
       </div></div>
     </div>
 
@@ -376,7 +398,7 @@
       <div class="exec-t">Executive Summary</div>
       <ul>
         <li><b>The headline index rose 0.6%</b> in April (seasonally adjusted), after March's sharp 0.9%.</li>
-        <li><b>Year-over-year inflation accelerated to 3.8%</b> from 3.3% in March.</li>
+        <li><b>YoY inflation accelerated to 3.8%</b> from 3.3% in March.</li>
         <li><b>Core inflation accelerated to +0.4%</b> monthly (vs. 0.2% in the two prior months); shelter rose 0.6%.</li>
         <li><b>Energy rose 3.8%</b> (much less than March's 10.9%) but still accounted for more than forty percent of the total increase. <b>Airline fares rose 2.8%</b>.</li>
         <li>Next release: <b>June 10, 2026</b> (May data) — already available under the "May '26" tab.</li>
@@ -386,13 +408,13 @@
     <div class="sec">
       <div class="st">Category Detail (seasonally adjusted, MoM)</div>
       <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+5.4%<span class="aru">↑</span></div><div class="spn">Year-over-year: +28.4%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.5%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.3%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">Year-over-year: +0.2%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">0.0%<span class="ard" style="color:var(--sl)">–</span></div><div class="spn">Year-over-year: -2.7%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.8%<span class="aru">↑</span></div><div class="spn">Year-over-year: +20.7%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">-0.1%<span class="ard">↓</span></div><div class="spn">Year-over-year: +2.5%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.6%<span class="aru">↑</span></div><div class="spn">Year-over-year: +4.2%</div></div>
+        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+5.4%<span class="aru">↑</span></div><div class="spn">YoY: +28.4%</div></div>
+        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.5%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
+        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">YoY: +0.2%</div></div>
+        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">0.0%<span class="ard" style="color:var(--sl)">–</span></div><div class="spn">YoY: -2.7%</div></div>
+        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.8%<span class="aru">↑</span></div><div class="spn">YoY: +20.7%</div></div>
+        <div class="spr"><div class="spl">Medical care</div><div class="spv">-0.1%<span class="ard">↓</span></div><div class="spn">YoY: +2.5%</div></div>
+        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.6%<span class="aru">↑</span></div><div class="spn">YoY: +4.2%</div></div>
       </div>
     </div>
 
@@ -413,12 +435,12 @@
     <div class="vtag">Released Apr 10, 2026</div>
 
     <div class="tr">
-      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.9%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">Year-over-year: <b>3.3%</b></div></div>
+      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.9%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.3%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
-        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">Year-over-year: 2.6%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">0.0%</div><div class="ms">Year-over-year: 2.7%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+10.9%</div><div class="ms">Year-over-year: 12.5%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.3%</div><div class="ms">Year-over-year: 3.0%</div></div>
+        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.6%</div></div>
+        <div class="mc-sm"><div class="ml">Food</div><div class="mv">0.0%</div><div class="ms">YoY: 2.7%</div></div>
+        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+10.9%</div><div class="ms">YoY: 12.5%</div></div>
+        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.3%</div><div class="ms">YoY: 3.0%</div></div>
       </div></div>
     </div>
 
@@ -426,9 +448,9 @@
       <div class="exec-t">Executive Summary</div>
       <ul>
         <li><b>The headline index jumped 0.9%</b> in March (seasonally adjusted), the largest monthly increase since June 2022, after February's 0.3%.</li>
-        <li><b>Year-over-year inflation surged to 3.3%</b> from 2.4% in February.</li>
+        <li><b>YoY inflation surged to 3.3%</b> from 2.4% in February.</li>
         <li><b>Energy rose 10.9%</b>, led by a <b>21.2% spike in gasoline</b> — the series' largest monthly increase since 1967 — which accounted for nearly three-quarters of the total increase.</li>
-        <li><b>Core inflation held steady at +0.2%</b> monthly; the year-over-year rate rose to 2.6% from 2.5%. Food was unchanged for the month.</li>
+        <li><b>Core inflation held steady at +0.2%</b> monthly; the YoY rate rose to 2.6% from 2.5%. Food was unchanged for the month.</li>
         <li>Next release: <b>May 12, 2026</b> (April data) — already available under the "Apr '26" tab.</li>
       </ul>
     </div>
@@ -436,13 +458,13 @@
     <div class="sec">
       <div class="st">Category Detail (seasonally adjusted, MoM)</div>
       <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+21.2%<span class="aru">↑</span></div><div class="spn">Year-over-year: +18.9%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.1%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">0.0%<span class="ard" style="color:var(--sl)">–</span></div><div class="spn">Year-over-year: +0.8%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-0.4%<span class="ard">↓</span></div><div class="spn">Year-over-year: -3.2%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.7%<span class="aru">↑</span></div><div class="spn">Year-over-year: +14.9%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">-0.2%<span class="ard">↓</span></div><div class="spn">Year-over-year: +3.1%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+1.0%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.4%</div></div>
+        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+21.2%<span class="aru">↑</span></div><div class="spn">YoY: +18.9%</div></div>
+        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.1%</div></div>
+        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">0.0%<span class="ard" style="color:var(--sl)">–</span></div><div class="spn">YoY: +0.8%</div></div>
+        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-0.4%<span class="ard">↓</span></div><div class="spn">YoY: -3.2%</div></div>
+        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.7%<span class="aru">↑</span></div><div class="spn">YoY: +14.9%</div></div>
+        <div class="spr"><div class="spl">Medical care</div><div class="spv">-0.2%<span class="ard">↓</span></div><div class="spn">YoY: +3.1%</div></div>
+        <div class="spr"><div class="spl">Apparel</div><div class="spv">+1.0%<span class="aru">↑</span></div><div class="spn">YoY: +3.4%</div></div>
       </div>
     </div>
 
@@ -463,12 +485,12 @@
     <div class="vtag">Released Mar 11, 2026</div>
 
     <div class="tr">
-      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.3%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">Year-over-year: <b>2.4%</b></div></div>
+      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.3%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>2.4%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
-        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">Year-over-year: 2.5%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.4%</div><div class="ms">Year-over-year: 3.1%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+0.6%</div><div class="ms">Year-over-year: 0.5%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.2%</div><div class="ms">Year-over-year: 3.0%</div></div>
+        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.5%</div></div>
+        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.4%</div><div class="ms">YoY: 3.1%</div></div>
+        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+0.6%</div><div class="ms">YoY: 0.5%</div></div>
+        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.0%</div></div>
       </div></div>
     </div>
 
@@ -476,8 +498,8 @@
       <div class="exec-t">Executive Summary</div>
       <ul>
         <li><b>The headline index rose 0.3%</b> in February (seasonally adjusted), after January's 0.2%.</li>
-        <li><b>Year-over-year inflation held at 2.4%</b>, same as January.</li>
-        <li><b>Core inflation decelerated to +0.2%</b> monthly (vs. 0.3% in January); the year-over-year rate also held at 2.5%.</li>
+        <li><b>YoY inflation held at 2.4%</b>, same as January.</li>
+        <li><b>Core inflation decelerated to +0.2%</b> monthly (vs. 0.3% in January); the YoY rate also held at 2.5%.</li>
         <li><b>Shelter (+0.2%)</b> was the main driver of the monthly increase given its weight in the index. <b>Energy rose again (+0.6%)</b> after falling 1.5% in January.</li>
         <li>Next release: <b>April 10, 2026</b> (March data) — already available under the "Mar '26" tab.</li>
       </ul>
@@ -486,13 +508,13 @@
     <div class="sec">
       <div class="st">Category Detail (seasonally adjusted, MoM)</div>
       <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+0.8%<span class="aru">↑</span></div><div class="spn">Year-over-year: -5.6%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.2%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-0.3%<span class="ard">↓</span></div><div class="spn">Year-over-year: +0.2%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-0.4%<span class="ard">↓</span></div><div class="spn">Year-over-year: -3.2%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+1.4%<span class="aru">↑</span></div><div class="spn">Year-over-year: +7.1%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.5%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.4%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+1.3%<span class="aru">↑</span></div><div class="spn">Year-over-year: +2.5%</div></div>
+        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+0.8%<span class="aru">↑</span></div><div class="spn">YoY: -5.6%</div></div>
+        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.2%</div></div>
+        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-0.3%<span class="ard">↓</span></div><div class="spn">YoY: +0.2%</div></div>
+        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-0.4%<span class="ard">↓</span></div><div class="spn">YoY: -3.2%</div></div>
+        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+1.4%<span class="aru">↑</span></div><div class="spn">YoY: +7.1%</div></div>
+        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.5%<span class="aru">↑</span></div><div class="spn">YoY: +3.4%</div></div>
+        <div class="spr"><div class="spl">Apparel</div><div class="spv">+1.3%<span class="aru">↑</span></div><div class="spn">YoY: +2.5%</div></div>
       </div>
     </div>
 
@@ -513,12 +535,12 @@
     <div class="vtag">Released Feb 13, 2026</div>
 
     <div class="tr">
-      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.2%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">Year-over-year: <b>2.4%</b></div></div>
+      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.2%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>2.4%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
-        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.3%</div><div class="ms">Year-over-year: 2.5%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">Year-over-year: 2.9%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">-1.5%</div><div class="ms">Year-over-year: -0.1%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.2%</div><div class="ms">Year-over-year: 3.0%</div></div>
+        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.3%</div><div class="ms">YoY: 2.5%</div></div>
+        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.9%</div></div>
+        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">-1.5%</div><div class="ms">YoY: -0.1%</div></div>
+        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.0%</div></div>
       </div></div>
     </div>
 
@@ -526,8 +548,8 @@
       <div class="exec-t">Executive Summary</div>
       <ul>
         <li><b>The headline index rose 0.2%</b> in January (seasonally adjusted), after rising 0.3% in December.</li>
-        <li><b>Year-over-year inflation fell to 2.4%</b> from 2.7% in December.</li>
-        <li><b>Core inflation accelerated to +0.3%</b> monthly (vs. 0.2% in December); the year-over-year rate held at 2.5%.</li>
+        <li><b>YoY inflation fell to 2.4%</b> from 2.7% in December.</li>
+        <li><b>Core inflation accelerated to +0.3%</b> monthly (vs. 0.2% in December); the YoY rate held at 2.5%.</li>
         <li><b>Shelter (+0.2%)</b> was the main driver of the monthly increase given its weight in the index. <b>Energy fell 1.5%</b>, led by lower gasoline prices (-3.2%), offsetting much of the increase.</li>
         <li>Next release: <b>March 11, 2026</b> (February data) — already available under the "Feb '26" tab.</li>
       </ul>
@@ -536,13 +558,13 @@
     <div class="sec">
       <div class="st">Category Detail (seasonally adjusted, MoM)</div>
       <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">-3.2%<span class="ard">↓</span></div><div class="spn">Year-over-year: -7.5%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.3%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-0.4%<span class="ard">↓</span></div><div class="spn">Year-over-year: +0.5%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-1.8%<span class="ard">↓</span></div><div class="spn">Year-over-year: -2.0%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+6.5%<span class="aru">↑</span></div><div class="spn">Year-over-year: +2.2%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">Year-over-year: +3.2%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">Year-over-year: +1.7%</div></div>
+        <div class="spr"><div class="spl">Gasoline</div><div class="spv">-3.2%<span class="ard">↓</span></div><div class="spn">YoY: -7.5%</div></div>
+        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
+        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-0.4%<span class="ard">↓</span></div><div class="spn">YoY: +0.5%</div></div>
+        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-1.8%<span class="ard">↓</span></div><div class="spn">YoY: -2.0%</div></div>
+        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+6.5%<span class="aru">↑</span></div><div class="spn">YoY: +2.2%</div></div>
+        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.2%</div></div>
+        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +1.7%</div></div>
       </div>
     </div>
 
@@ -561,7 +583,21 @@
   <!-- ====================== PANEL MATRIX (Category x Month) ====================== -->
   <div class="mp" id="panel-matrix">
     <div class="bb-wrap" id="matrixWrap"></div>
-    <div class="cnote">Click a badge to see monthly and year-over-year detail for that category.</div>
+    <div class="cnote">Click a badge to see monthly and YoY detail for that category.</div>
+  </div>
+
+  <!-- ====================== PANEL TABLE (report-style monthly table) ======================
+       Reproduces the BLS Table A layout: expenditure categories (indented by
+       level, matching the report) as rows, months as columns, seasonally
+       adjusted % change from the preceding month as values, plus a final
+       YoY (unadjusted, 12-mo) column.
+       To add a new month: add its label to DTMONTHS (at the front, since
+       months run newest→oldest left to right, right after the YoY column)
+       and its value (at the front of the array) to every row's "vals" in
+       DTROWS, and update each row's "yoy" to the new latest month's figure. -->
+  <div class="mp" id="panel-table">
+    <div class="bb-wrap" id="tableWrap"></div>
+    <div class="cnote">Seasonally adjusted % change from the preceding month. Last column: unadjusted change over the trailing 12 months.</div>
   </div>
 
   <!-- ====================== MODALS ====================== -->
@@ -634,94 +670,94 @@ const MMONTHS=['jul26','jun26','may26','abr26','mar26','feb26','ene26'];
 const MDATA={
   jul26:{
     label:'Jul 2026',
-    nucleo:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.2%</b> (vs. 0.0% in June).','Year-over-year: <b>2.5%</b> (down from 2.6% in June, despite the monthly acceleration).','Shelter was the biggest driver of this component.']},
-    alimentos:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>.','Year-over-year: <b>3.0%</b>.','Food away from home rose 0.3%.']},
-    energia:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-1.5%</b> (second straight month of decline).','Year-over-year: <b>+14.7%</b>.','The drop was much smaller than June\'s (-5.7%).']},
-    vivienda:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>, same as June.','Year-over-year: <b>3.2%</b>.','Accounted for nearly two-thirds of the headline monthly increase.']},
-    gasolina:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-2.9%</b>.','Year-over-year: <b>+24.6%</b>.']},
-    autos_usados:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.4%</b>.','Year-over-year: <b>-1.9%</b> (still below last year).']},
-    seguro_auto:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.3%</b>.','Year-over-year: <b>-4.5%</b>, still on a sustained decline.']},
-    tarifas_aereas:{status:'hot',tag:'Sharp jump',bullets:['Monthly change: <b>+2.2%</b>, after rising just 0.2% in June.','Year-over-year: <b>+25.5%</b>.']},
-    salud:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.4%</b> (after falling 0.1% in June).','Year-over-year: <b>+1.7%</b>.']},
-    vestimenta:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>.','Year-over-year: <b>+3.9%</b>.']},
+    nucleo:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.2%</b> (vs. 0.0% in June).','YoY: <b>2.5%</b> (down from 2.6% in June, despite the monthly acceleration).','Shelter was the biggest driver of this component.']},
+    alimentos:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>.','YoY: <b>3.0%</b>.','Food away from home rose 0.3%.']},
+    energia:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-1.5%</b> (second straight month of decline).','YoY: <b>+14.7%</b>.','The drop was much smaller than June\'s (-5.7%).']},
+    vivienda:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>, same as June.','YoY: <b>3.2%</b>.','Accounted for nearly two-thirds of the headline monthly increase.']},
+    gasolina:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-2.9%</b>.','YoY: <b>+24.6%</b>.']},
+    autos_usados:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.4%</b>.','YoY: <b>-1.9%</b> (still below last year).']},
+    seguro_auto:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.3%</b>.','YoY: <b>-4.5%</b>, still on a sustained decline.']},
+    tarifas_aereas:{status:'hot',tag:'Sharp jump',bullets:['Monthly change: <b>+2.2%</b>, after rising just 0.2% in June.','YoY: <b>+25.5%</b>.']},
+    salud:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.4%</b> (after falling 0.1% in June).','YoY: <b>+1.7%</b>.']},
+    vestimenta:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>.','YoY: <b>+3.9%</b>.']},
   },
   jun26:{
     label:'Jun 2026',
-    nucleo:{status:'flat',tag:'Unchanged',bullets:['Monthly change: <b>0.0%</b>, the first flat reading in several months.','Year-over-year: <b>2.6%</b> (down from 2.9% in May).','Rent rose just 0.1%, the smallest increase since January 2021.']},
-    alimentos:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.2%</b>.','Year-over-year: <b>3.0%</b>.']},
-    energia:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-5.7%</b>, the largest monthly drop since April 2020.','Year-over-year: <b>+15.7%</b>.','Gasoline fell 9.7% in the month.']},
-    vivienda:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>, the smallest change since January 2021.','Year-over-year: <b>3.3%</b>.']},
-    gasolina:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-9.7%</b>.','Year-over-year: <b>+26.7%</b>.']},
-    autos_usados:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.2%</b>.','Year-over-year: <b>-1.8%</b>.']},
-    seguro_auto:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-2.0%</b>, after falling 1.7% in May.','Year-over-year: <b>-4.1%</b>.']},
-    tarifas_aereas:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.2%</b>.','Year-over-year: <b>+26.5%</b>.']},
-    salud:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.1%</b>, after rising 0.3% in May.','Year-over-year: <b>+2.0%</b>.']},
-    vestimenta:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.6%</b>.','Year-over-year: <b>+3.9%</b>.']},
+    nucleo:{status:'flat',tag:'Unchanged',bullets:['Monthly change: <b>0.0%</b>, the first flat reading in several months.','YoY: <b>2.6%</b> (down from 2.9% in May).','Rent rose just 0.1%, the smallest increase since January 2021.']},
+    alimentos:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.2%</b>.','YoY: <b>3.0%</b>.']},
+    energia:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-5.7%</b>, the largest monthly drop since April 2020.','YoY: <b>+15.7%</b>.','Gasoline fell 9.7% in the month.']},
+    vivienda:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>, the smallest change since January 2021.','YoY: <b>3.3%</b>.']},
+    gasolina:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-9.7%</b>.','YoY: <b>+26.7%</b>.']},
+    autos_usados:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.2%</b>.','YoY: <b>-1.8%</b>.']},
+    seguro_auto:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-2.0%</b>, after falling 1.7% in May.','YoY: <b>-4.1%</b>.']},
+    tarifas_aereas:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.2%</b>.','YoY: <b>+26.5%</b>.']},
+    salud:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.1%</b>, after rising 0.3% in May.','YoY: <b>+2.0%</b>.']},
+    vestimenta:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.6%</b>.','YoY: <b>+3.9%</b>.']},
   },
   may26:{
     label:'May 2026',
-    nucleo:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+0.2%</b> (vs. 0.4% in April).','Year-over-year: <b>2.9%</b> (up from 2.8% in April).','Shelter\'s pace of increase eased to 0.3%.']},
-    alimentos:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.2%</b>.','Year-over-year: <b>3.1%</b>.','Food at home rose just 0.1%.']},
-    energia:{status:'hot',tag:'Main driver',bullets:['Monthly change: <b>+3.9%</b>, slightly above April\'s 3.8%.','Year-over-year: <b>+23.5%</b>.','Accounted for more than 60% of the headline monthly increase.']},
-    vivienda:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+0.3%</b> (vs. +0.6% in April).','Year-over-year: <b>3.4%</b>.']},
-    gasolina:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+7.0%</b>, above April\'s 5.4%.','Year-over-year: <b>+40.5%</b>.']},
-    autos_usados:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>.','Year-over-year: <b>-2.0%</b>.']},
-    seguro_auto:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-1.7%</b>, after rising 0.1% in April.','Year-over-year: <b>-2.0%</b>.']},
-    tarifas_aereas:{status:'neg',tag:'Sharp rise',bullets:['Monthly change: <b>+2.7%</b>, similar to April\'s +2.8%.','Year-over-year: <b>+26.7%</b>.']},
-    salud:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.3%</b> (after falling 0.1% in April).','Year-over-year: <b>+2.6%</b>.']},
-    vestimenta:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.3%</b>.','Year-over-year: <b>+4.8%</b>.']},
+    nucleo:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+0.2%</b> (vs. 0.4% in April).','YoY: <b>2.9%</b> (up from 2.8% in April).','Shelter\'s pace of increase eased to 0.3%.']},
+    alimentos:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.2%</b>.','YoY: <b>3.1%</b>.','Food at home rose just 0.1%.']},
+    energia:{status:'hot',tag:'Main driver',bullets:['Monthly change: <b>+3.9%</b>, slightly above April\'s 3.8%.','YoY: <b>+23.5%</b>.','Accounted for more than 60% of the headline monthly increase.']},
+    vivienda:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+0.3%</b> (vs. +0.6% in April).','YoY: <b>3.4%</b>.']},
+    gasolina:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+7.0%</b>, above April\'s 5.4%.','YoY: <b>+40.5%</b>.']},
+    autos_usados:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>.','YoY: <b>-2.0%</b>.']},
+    seguro_auto:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-1.7%</b>, after rising 0.1% in April.','YoY: <b>-2.0%</b>.']},
+    tarifas_aereas:{status:'neg',tag:'Sharp rise',bullets:['Monthly change: <b>+2.7%</b>, similar to April\'s +2.8%.','YoY: <b>+26.7%</b>.']},
+    salud:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.3%</b> (after falling 0.1% in April).','YoY: <b>+2.6%</b>.']},
+    vestimenta:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.3%</b>.','YoY: <b>+4.8%</b>.']},
   },
   abr26:{
     label:'Apr 2026',
-    nucleo:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.4%</b> (vs. 0.2% in the two prior months).','Year-over-year: <b>2.8%</b> (up from 2.6% in March).','Shelter was the biggest driver of this component.']},
-    alimentos:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.5%</b>, after being flat in March.','Year-over-year: <b>3.2%</b>.','Food at home rose 0.7%.']},
-    energia:{status:'hot',tag:'Main driver',bullets:['Monthly change: <b>+3.8%</b> (sharply lower than March\'s 10.9%).','Year-over-year: <b>+17.9%</b>.','Accounted for more than 40% of the headline monthly increase.']},
-    vivienda:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.6%</b>.','Year-over-year: <b>3.3%</b>.']},
-    gasolina:{status:'pos',tag:'Easing sharply',bullets:['Monthly change: <b>+5.4%</b>, well below March\'s +21.2%.','Year-over-year: <b>+28.4%</b>.']},
-    autos_usados:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>0.0%</b>, unchanged.','Year-over-year: <b>-2.7%</b>.']},
-    seguro_auto:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>.','Year-over-year: <b>+0.2%</b>.']},
-    tarifas_aereas:{status:'neg',tag:'Sharp rise',bullets:['Monthly change: <b>+2.8%</b>.','Year-over-year: <b>+20.7%</b>.']},
-    salud:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.1%</b>, after falling 0.2% in March.','Year-over-year: <b>+2.5%</b>.']},
-    vestimenta:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.6%</b>.','Year-over-year: <b>+4.2%</b>.']},
+    nucleo:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.4%</b> (vs. 0.2% in the two prior months).','YoY: <b>2.8%</b> (up from 2.6% in March).','Shelter was the biggest driver of this component.']},
+    alimentos:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.5%</b>, after being flat in March.','YoY: <b>3.2%</b>.','Food at home rose 0.7%.']},
+    energia:{status:'hot',tag:'Main driver',bullets:['Monthly change: <b>+3.8%</b> (sharply lower than March\'s 10.9%).','YoY: <b>+17.9%</b>.','Accounted for more than 40% of the headline monthly increase.']},
+    vivienda:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.6%</b>.','YoY: <b>3.3%</b>.']},
+    gasolina:{status:'pos',tag:'Easing sharply',bullets:['Monthly change: <b>+5.4%</b>, well below March\'s +21.2%.','YoY: <b>+28.4%</b>.']},
+    autos_usados:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>0.0%</b>, unchanged.','YoY: <b>-2.7%</b>.']},
+    seguro_auto:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.1%</b>.','YoY: <b>+0.2%</b>.']},
+    tarifas_aereas:{status:'neg',tag:'Sharp rise',bullets:['Monthly change: <b>+2.8%</b>.','YoY: <b>+20.7%</b>.']},
+    salud:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.1%</b>, after falling 0.2% in March.','YoY: <b>+2.5%</b>.']},
+    vestimenta:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.6%</b>.','YoY: <b>+4.2%</b>.']},
   },
   mar26:{
     label:'Mar 2026',
-    nucleo:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.2%</b>, same as February.','Year-over-year: <b>2.6%</b> (up from 2.5% in February).','Shelter accelerated slightly to 0.3%.']},
-    alimentos:{status:'pos',tag:'Unchanged',bullets:['Monthly change: <b>0.0%</b>, after rising 0.4% in February.','Year-over-year: <b>2.7%</b> (down from 3.1% in February).','Food at home fell 0.2% while food away from home rose 0.2%.']},
-    energia:{status:'hot',tag:'Historic jump',bullets:['Monthly change: <b>+10.9%</b>, the largest monthly increase since September 2005.','Year-over-year: <b>+12.5%</b>.','Accounted for nearly three-quarters of the headline monthly increase.']},
-    vivienda:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.3%</b> (vs. +0.2% in February).','Year-over-year: <b>3.0%</b>, stable.']},
-    gasolina:{status:'hot',tag:'Historic jump',bullets:['Monthly change: <b>+21.2%</b>, the series\' largest monthly increase since 1967.','Year-over-year: <b>+18.9%</b>.']},
-    autos_usados:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>-0.4%</b>, same as February.','Year-over-year: <b>-3.2%</b>.']},
-    seguro_auto:{status:'neg',tag:'Rebounding',bullets:['Monthly change: <b>0.0%</b>, after falling 0.3% in February.','Year-over-year: <b>+0.8%</b>.']},
-    tarifas_aereas:{status:'hot',tag:'Sharp rise',bullets:['Monthly change: <b>+2.7%</b>, above February\'s +1.4%.','Year-over-year: <b>+14.9%</b>.']},
-    salud:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.2%</b>, after rising 0.5% in February.','Year-over-year: <b>+3.1%</b>.']},
-    vestimenta:{status:'neg',tag:'YoY rising',bullets:['Monthly change: <b>+1.0%</b> (vs. +1.3% in February).','Year-over-year: <b>+3.4%</b>, up from 2.5% in February.']},
+    nucleo:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.2%</b>, same as February.','YoY: <b>2.6%</b> (up from 2.5% in February).','Shelter accelerated slightly to 0.3%.']},
+    alimentos:{status:'pos',tag:'Unchanged',bullets:['Monthly change: <b>0.0%</b>, after rising 0.4% in February.','YoY: <b>2.7%</b> (down from 3.1% in February).','Food at home fell 0.2% while food away from home rose 0.2%.']},
+    energia:{status:'hot',tag:'Historic jump',bullets:['Monthly change: <b>+10.9%</b>, the largest monthly increase since September 2005.','YoY: <b>+12.5%</b>.','Accounted for nearly three-quarters of the headline monthly increase.']},
+    vivienda:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.3%</b> (vs. +0.2% in February).','YoY: <b>3.0%</b>, stable.']},
+    gasolina:{status:'hot',tag:'Historic jump',bullets:['Monthly change: <b>+21.2%</b>, the series\' largest monthly increase since 1967.','YoY: <b>+18.9%</b>.']},
+    autos_usados:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>-0.4%</b>, same as February.','YoY: <b>-3.2%</b>.']},
+    seguro_auto:{status:'neg',tag:'Rebounding',bullets:['Monthly change: <b>0.0%</b>, after falling 0.3% in February.','YoY: <b>+0.8%</b>.']},
+    tarifas_aereas:{status:'hot',tag:'Sharp rise',bullets:['Monthly change: <b>+2.7%</b>, above February\'s +1.4%.','YoY: <b>+14.9%</b>.']},
+    salud:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.2%</b>, after rising 0.5% in February.','YoY: <b>+3.1%</b>.']},
+    vestimenta:{status:'neg',tag:'YoY rising',bullets:['Monthly change: <b>+1.0%</b> (vs. +1.3% in February).','YoY: <b>+3.4%</b>, up from 2.5% in February.']},
   },
   feb26:{
     label:'Feb 2026',
-    nucleo:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+0.2%</b> (vs. 0.3% in January).','Year-over-year: <b>2.5%</b>, same as January.']},
-    alimentos:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.4%</b>, after rising 0.2% in January.','Year-over-year: <b>3.1%</b>.']},
-    energia:{status:'neg',tag:'Rebounding',bullets:['Monthly change: <b>+0.6%</b>, after falling 1.5% in January.','Year-over-year: <b>+0.5%</b>.']},
-    vivienda:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.2%</b>, same as January.','Year-over-year: <b>3.0%</b>.','Was the main driver of the headline monthly increase.']},
-    gasolina:{status:'neg',tag:'Rebounding',bullets:['Monthly change: <b>+0.8%</b>, after falling 3.2% in January.','Year-over-year: <b>-5.6%</b>.']},
-    autos_usados:{status:'pos',tag:'Decline easing',bullets:['Monthly change: <b>-0.4%</b> (vs. -1.8% in January).','Year-over-year: <b>-3.2%</b>.']},
-    seguro_auto:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.3%</b>, still declining.','Year-over-year: <b>+0.2%</b>.']},
-    tarifas_aereas:{status:'neg',tag:'Sharp rise',bullets:['Monthly change: <b>+1.4%</b>, though easing from January\'s +6.5%.','Year-over-year: <b>+7.1%</b>.']},
-    salud:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.5%</b>, after rising 0.3% in January.','Year-over-year: <b>+3.4%</b>.']},
-    vestimenta:{status:'neg',tag:'Sharp rise',bullets:['Monthly change: <b>+1.3%</b>, after rising 0.3% in January.','Year-over-year: <b>+2.5%</b>.']},
+    nucleo:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+0.2%</b> (vs. 0.3% in January).','YoY: <b>2.5%</b>, same as January.']},
+    alimentos:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.4%</b>, after rising 0.2% in January.','YoY: <b>3.1%</b>.']},
+    energia:{status:'neg',tag:'Rebounding',bullets:['Monthly change: <b>+0.6%</b>, after falling 1.5% in January.','YoY: <b>+0.5%</b>.']},
+    vivienda:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.2%</b>, same as January.','YoY: <b>3.0%</b>.','Was the main driver of the headline monthly increase.']},
+    gasolina:{status:'neg',tag:'Rebounding',bullets:['Monthly change: <b>+0.8%</b>, after falling 3.2% in January.','YoY: <b>-5.6%</b>.']},
+    autos_usados:{status:'pos',tag:'Decline easing',bullets:['Monthly change: <b>-0.4%</b> (vs. -1.8% in January).','YoY: <b>-3.2%</b>.']},
+    seguro_auto:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.3%</b>, still declining.','YoY: <b>+0.2%</b>.']},
+    tarifas_aereas:{status:'neg',tag:'Sharp rise',bullets:['Monthly change: <b>+1.4%</b>, though easing from January\'s +6.5%.','YoY: <b>+7.1%</b>.']},
+    salud:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.5%</b>, after rising 0.3% in January.','YoY: <b>+3.4%</b>.']},
+    vestimenta:{status:'neg',tag:'Sharp rise',bullets:['Monthly change: <b>+1.3%</b>, after rising 0.3% in January.','YoY: <b>+2.5%</b>.']},
   },
   ene26:{
     label:'Jan 2026',
-    nucleo:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.3%</b> (vs. 0.2% in December).','Year-over-year: <b>2.5%</b>, stable versus December.','Shelter and airline fares were the main drivers of this increase.']},
-    alimentos:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+0.2%</b> (vs. 0.7% in December).','Year-over-year: <b>2.9%</b>.','Food at home rose 0.2% while food away from home rose 0.1%.']},
-    energia:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-1.5%</b>, after rising 0.3% in December.','Year-over-year: <b>-0.1%</b>.','Gasoline fell 3.2% in the month.']},
-    vivienda:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+0.2%</b> (vs. 0.4% in December).','Year-over-year: <b>3.0%</b>.','Was the main driver of the monthly increase given its weight in the index.']},
-    gasolina:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-3.2%</b> (after falling 0.3% in December).','Year-over-year: <b>-7.5%</b>.']},
-    autos_usados:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-1.8%</b>, after falling 0.9% in December.','Year-over-year: <b>-2.0%</b>.']},
-    seguro_auto:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.4%</b>.','Year-over-year: <b>+0.5%</b>.']},
-    tarifas_aereas:{status:'hot',tag:'Sharp jump',bullets:['Monthly change: <b>+6.5%</b>, the largest monthly jump in several months.','Year-over-year: <b>+2.2%</b>.']},
-    salud:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.3%</b>.','Year-over-year: <b>+3.2%</b>.']},
-    vestimenta:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.3%</b>.','Year-over-year: <b>+1.7%</b>.']},
+    nucleo:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.3%</b> (vs. 0.2% in December).','YoY: <b>2.5%</b>, stable versus December.','Shelter and airline fares were the main drivers of this increase.']},
+    alimentos:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+0.2%</b> (vs. 0.7% in December).','YoY: <b>2.9%</b>.','Food at home rose 0.2% while food away from home rose 0.1%.']},
+    energia:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-1.5%</b>, after rising 0.3% in December.','YoY: <b>-0.1%</b>.','Gasoline fell 3.2% in the month.']},
+    vivienda:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+0.2%</b> (vs. 0.4% in December).','YoY: <b>3.0%</b>.','Was the main driver of the monthly increase given its weight in the index.']},
+    gasolina:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-3.2%</b> (after falling 0.3% in December).','YoY: <b>-7.5%</b>.']},
+    autos_usados:{status:'pos',tag:'Sharp decline',bullets:['Monthly change: <b>-1.8%</b>, after falling 0.9% in December.','YoY: <b>-2.0%</b>.']},
+    seguro_auto:{status:'pos',tag:'Falling',bullets:['Monthly change: <b>-0.4%</b>.','YoY: <b>+0.5%</b>.']},
+    tarifas_aereas:{status:'hot',tag:'Sharp jump',bullets:['Monthly change: <b>+6.5%</b>, the largest monthly jump in several months.','YoY: <b>+2.2%</b>.']},
+    salud:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.3%</b>.','YoY: <b>+3.2%</b>.']},
+    vestimenta:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.3%</b>.','YoY: <b>+1.7%</b>.']},
   },
 };
 
@@ -733,7 +769,7 @@ function renderMatrix(){
     wrap.innerHTML='<div class="bb-empty-state"><div class="bb-es-icon">📄</div><div class="bb-es-title">No data yet</div></div>';
     return;
   }
-  let html='<table class="bb-table"><thead><tr><th class="bb-topic-h">Category</th>';
+  let html='<table class="bb-table"><thead><tr><th class="bb-topic-h"></th>';
   MMONTHS.forEach((m,i)=>{
     html+=`<th class="bb-month-h${i===0?' bb-latest':''}">${MDATA[m].label}</th>`;
   });
@@ -767,7 +803,60 @@ document.addEventListener('keydown',e=>{
   }
 });
 
+/* ============================================================
+   TABLE MODULE — report-style monthly table (BLS Table A layout).
+   To add a new month: append its label to DTMONTHS and its value
+   (in the same order) to every row's "vals" array in DTROWS, and
+   update each row's "yoy" to the new latest month's YoY figure.
+   ============================================================ */
+const DTMONTHS=["Jul '26","Jun '26","May '26","Apr '26","Mar '26","Feb '26","Jan '26"];
+const DTROWS=[
+  {lvl:0,name:'All items',vals:[0.1,-0.4,0.5,0.6,0.9,0.3,0.2],yoy:3.4},
+  {lvl:1,name:'Food',vals:[0.1,0.2,0.2,0.5,0.0,0.4,0.2],yoy:3.0},
+  {lvl:2,name:'Food at home',vals:[-0.1,0.2,0.1,0.7,-0.2,0.4,0.2],yoy:2.7},
+  {lvl:2,name:'Food away from home',vals:[0.3,0.2,0.3,0.2,0.2,0.3,0.1],yoy:3.4},
+  {lvl:1,name:'Energy',vals:[-1.5,-5.7,3.9,3.8,10.9,0.6,-1.5],yoy:14.7},
+  {lvl:2,name:'Energy commodities',vals:[-2.9,-9.5,6.7,5.6,21.3,1.1,-3.3],yoy:24.7},
+  {lvl:3,name:'Gasoline (all types)',vals:[-2.9,-9.7,7.0,5.4,21.2,0.8,-3.2],yoy:24.6},
+  {lvl:3,name:'Fuel oil',vals:[-1.7,-9.2,3.8,5.8,30.7,11.1,-5.7],yoy:39.1},
+  {lvl:2,name:'Energy services',vals:[0.3,-0.7,0.4,1.6,0.4,0.2,0.2],yoy:4.3},
+  {lvl:3,name:'Electricity',vals:[0.1,-1.0,0.6,2.1,0.8,-0.7,-0.1],yoy:4.2},
+  {lvl:3,name:'Utility (piped) gas service',vals:[0.7,0.5,-0.5,-0.1,-0.9,3.1,1.0],yoy:4.3},
+  {lvl:1,name:'All items less food and energy',vals:[0.2,0.0,0.2,0.4,0.2,0.2,0.3],yoy:2.5},
+  {lvl:2,name:'Commodities less food and energy commodities',vals:[0.2,-0.1,-0.1,0.0,0.1,0.1,0.0],yoy:0.8},
+  {lvl:3,name:'New vehicles',vals:[0.1,0.0,-0.3,-0.2,0.1,0.0,0.1],yoy:0.5},
+  {lvl:3,name:'Used cars and trucks',vals:[0.4,-0.2,0.1,0.0,-0.4,-0.4,-1.8],yoy:-1.9},
+  {lvl:3,name:'Apparel',vals:[0.1,-0.6,0.3,0.6,1.0,1.3,0.3],yoy:3.9},
+  {lvl:3,name:'Medical care commodities',vals:[-0.6,-0.2,-0.7,-0.4,-1.0,0.0,-0.1],yoy:-2.7},
+  {lvl:2,name:'Services less energy services',vals:[0.2,0.0,0.3,0.5,0.2,0.3,0.4],yoy:3.0},
+  {lvl:3,name:'Shelter',vals:[0.1,0.1,0.3,0.6,0.3,0.2,0.2],yoy:3.2},
+  {lvl:3,name:'Transportation services',vals:[0.3,-0.3,-0.6,0.3,0.6,0.2,1.4],yoy:2.9},
+  {lvl:3,name:'Medical care services',vals:[0.6,-0.1,0.5,0.0,0.0,0.6,0.3],yoy:2.7},
+];
+function dtFmt(v){return (v>0?'+':'')+v.toFixed(1)+'%';}
+function renderTable(){
+  const wrap=document.getElementById('tableWrap');
+  if(!wrap||wrap.dataset.built)return;
+  wrap.dataset.built='1';
+  let html='<table class="dt-table"><thead><tr><th class="dt-cat-h"></th><th class="dt-yoy-h">YoY</th>';
+  DTMONTHS.forEach((m,i)=>{
+    html+=`<th class="dt-month-h${i===0?' dt-latest':''}">${m}</th>`;
+  });
+  html+='</tr></thead><tbody>';
+  DTROWS.forEach(row=>{
+    html+=`<tr><td class="dt-cat-cell lvl${row.lvl}">${escH(row.name)}</td>`;
+    html+=`<td class="dt-num">${dtFmt(row.yoy)}</td>`;
+    row.vals.forEach((v,i)=>{
+      html+=`<td class="dt-num${i===0?' dt-latest':''}">${dtFmt(v)}</td>`;
+    });
+    html+='</tr>';
+  });
+  html+='</tbody></table>';
+  wrap.innerHTML=html;
+}
+
 renderMatrix();
+renderTable();
 </script>
 </body>
 </html>
