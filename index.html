@@ -203,9 +203,9 @@
 .modal-divider{border:none;border-top:1px solid var(--gr4);margin:16px 0}
 .modal-note{font-size:11px;color:var(--sl);font-weight:300;line-height:1.5;font-style:italic}
 
-.pdf-gen-btn{margin-top:6px;padding:4px 14px;font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--sl);background:#fff;border:1px solid var(--g2);border-radius:4px;cursor:pointer;transition:background .15s,border-color .15s}
-.pdf-gen-btn:hover{background:var(--g4);border-color:var(--g)}
-.pdf-gen-btn:disabled{cursor:default;opacity:.65;background:#fff;border-color:var(--g2)}
+.btn-pdf{display:inline-flex;align-items:center;gap:5px;margin-top:5px;padding:4px 12px;font-size:11px;font-weight:300;font-family:'Aller',sans-serif;border:1px solid #B3D88C;border-radius:4px;background:transparent;color:#5D7082;cursor:pointer;transition:all .15s}
+.btn-pdf:hover{background:#E1F1D3;color:#000}
+.btn-pdf:disabled{cursor:wait;opacity:.6}
 
 /* PDF export stage — built off-screen only while generating */
 #pdfStage{position:fixed;left:-20000px;top:0;width:720px;background:#fff;text-rendering:geometricPrecision;font-variant-ligatures:none;font-kerning:normal;-webkit-font-smoothing:antialiased}
@@ -231,7 +231,7 @@
       <span class="wh-sub">Periodicidad: Mensual</span>
       <span class="wh-sub">Última actualización: 11 sep 2026</span>
       <span class="wh-sub">Fuente: <a href="https://www.bls.gov/cpi/" target="_blank" style="color:#969696;text-decoration:none">bls.gov/cpi</a></span>
-      <button class="pdf-gen-btn" onclick="generatePdf(this)" title="Descargar el mes más reciente en PDF">PDF</button>
+      <button class="btn-pdf" id="btnPdf" onclick="genPdf()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PDF</button>
     </div>
   </div>
 
@@ -860,10 +860,11 @@ function pdfBuildStage(panel,meta){
   return {stage,pages};
 }
 
-async function generatePdf(btn){
-  if(btn.disabled)return;
-  const label=btn.textContent;
-  btn.disabled=true;btn.textContent='Generando…';
+async function genPdf(){
+  const btn=document.getElementById('btnPdf');
+  if(!btn||btn.disabled)return;
+  const txt=[...btn.childNodes].reverse().find(n=>n.nodeType===3); // label text node (icon stays)
+  btn.disabled=true;txt.nodeValue='Generando…';
   const proto=CanvasRenderingContext2D.prototype,origFill=proto.fillText;
   let built=null;
   try{
@@ -901,7 +902,7 @@ async function generatePdf(btn){
   }finally{
     proto.fillText=origFill;
     if(built)built.stage.remove();
-    btn.disabled=false;btn.textContent=label;
+    btn.disabled=false;txt.nodeValue='PDF';
   }
 }
 
