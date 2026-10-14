@@ -64,6 +64,7 @@
 .mv{font-size:16px;font-weight:700;color:#000;line-height:1}
 .ms{font-size:11px;color:#000;margin-top:4px;font-weight:300}
 .mc.ffr{min-width:120px;flex-shrink:0}
+.ms-exp{font-size:10.5px;color:var(--sl);margin-top:3px;font-weight:300}
 .mgrp{border:1px solid #d4d4d4;border-radius:6px;padding:8px 10px 10px;flex:1}
 .mgrp-title{font-size:9px;color:var(--sl);text-transform:uppercase;letter-spacing:.06em;font-weight:300;margin-bottom:7px}
 .mgrp-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -279,7 +280,7 @@
     <div class="vtag">Released Oct 14, 2026</div>
 
     <div class="tr">
-      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.6%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.7%</b></div></div>
+      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.6%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.7%</b></div><div class="ms-exp">Expected: +0.6%</div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
         <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.3%</div><div class="ms">YoY: 2.6%</div></div>
         <div class="mc-sm"><div class="ml">Food</div><div class="mv">0.0%</div><div class="ms">YoY: 2.5%</div></div>
@@ -291,9 +292,9 @@
     <div class="exec">
       <div class="exec-t">Executive Summary</div>
       <ul>
-        <li><b>The headline index rose 0.6%</b> in September (seasonally adjusted), after rising 0.4% in August.</li>
-        <li><b>YoY inflation accelerated to 3.7%</b> from 3.4% in August.</li>
-        <li><b>Core inflation held at +0.3%</b> monthly, same as August; the YoY rate rose to 2.6% from 2.4%.</li>
+        <li><b>The headline index rose 0.6%</b> in September (seasonally adjusted), in line with the <b>+0.6% expected</b>, after rising 0.4% in August.</li>
+        <li><b>YoY inflation accelerated to 3.7%</b> from 3.4% in August, above the <b>3.6% expected</b>.</li>
+        <li><b>Core inflation held at +0.3%</b> monthly, above the <b>+0.2% expected</b>; the YoY rate rose to 2.6% from 2.4%, also above the <b>2.5% expected</b>.</li>
         <li><b>Gasoline jumped +9.1%</b>, accounting for over half of the total monthly increase. <b>Energy overall rose +5.2%</b>.</li>
         <li>Next release: <b>November 10, 2026</b> (October data).</li>
       </ul>
@@ -810,6 +811,7 @@ function sp(id,btn,source){
   document.querySelectorAll('.older-item').forEach(t=>t.classList.remove('active'));
   const olderBtn=document.getElementById('olderBtn');
   document.getElementById('panel-'+id).classList.add('active');
+  if(id==='matrix'){const w=document.getElementById('matrixWrap');w.scrollLeft=w.scrollWidth;} // show latest month
   if(source==='older'){
     btn.classList.add('active');
     if(olderBtn)olderBtn.classList.add('has-active');
@@ -961,8 +963,8 @@ async function genPdf(){
 
 /* ============================================================
    MATRIX MODULE — Category x Month.
-   To add a new month: add its key to MMONTHS (at the front, so
-   it comes first) and its object in MDATA with the same category
+   To add a new month: add its key to MMONTHS (at the front; the
+   table displays oldest → newest, left to right) and its object in MDATA with the same category
    ids already used in MTOPICS.
    ============================================================ */
 const MTOPICS=[
@@ -1107,14 +1109,15 @@ function renderMatrix(){
     return;
   }
   let html='<table class="bb-table"><thead><tr><th class="bb-topic-h"></th>';
-  MMONTHS.forEach((m,i)=>{
-    html+=`<th class="bb-month-h${i===0?' bb-latest':''}">${MDATA[m].label}</th>`;
+  const cols=[...MMONTHS].reverse(); // oldest → newest (left to right)
+  cols.forEach(m=>{
+    html+=`<th class="bb-month-h${m===MMONTHS[0]?' bb-latest':''}">${MDATA[m].label}</th>`;
   });
   html+='</tr></thead><tbody>';
   MTOPICS.forEach(topic=>{
     html+='<tr>';
     html+=`<td class="bb-topic-cell"><span class="bb-topic-name">${topic.name}</span></td>`;
-    MMONTHS.forEach(m=>{
+    cols.forEach(m=>{
       const cell=MDATA[m][topic.id];
       if(!cell){html+='<td class="bb-data-cell"><span class="bb-empty-cell"></span></td>';}
       else{html+=`<td class="bb-data-cell"><span class="bb-badge ${cell.status}" onclick="openMdCell('${m}','${topic.id}')">${escH(cell.tag)}</span></td>`;}
