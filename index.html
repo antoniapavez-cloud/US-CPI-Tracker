@@ -155,22 +155,24 @@
 .bb-empty-state .bb-es-title{font-size:12.5px;font-weight:700;margin-bottom:4px;color:#000}
 
 .dt-table{border-collapse:collapse;width:auto}
-.dt-table thead th{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#000;padding:0 8px 10px;text-align:center;white-space:nowrap;border-bottom:1px solid var(--gr4);background:#fff}
-.dt-table thead th.dt-cat-h{text-align:left;padding-left:0;min-width:210px;position:sticky;left:0;z-index:3;background:#fff}
-.dt-table thead th.dt-month-h{width:56px;min-width:56px}
+.dt-table thead th{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#000;padding:8px 4px;text-align:center;vertical-align:middle;white-space:nowrap;border-bottom:1px solid var(--gr4);background:#fff}
+.dt-table thead th.dt-cat-h{text-align:left;padding-left:0;width:200px;min-width:200px;position:sticky;left:0;z-index:3;background:#fff}
+.dt-table thead th.dt-month-h{width:50px;min-width:50px}
 .dt-table thead th.dt-yoy-h{width:64px;min-width:64px}
-.dt-table thead th.dt-latest{color:var(--g)}
+.dt-table thead th.dt-latest{background:#F3F3F3}
 .dt-table tbody tr{border-bottom:1px solid var(--gr4)}
 .dt-table tbody tr:hover{background:var(--cb)}
 .dt-table tbody tr:last-child{border-bottom:none}
-.dt-cat-cell{padding:6px 14px 6px 0;white-space:nowrap;position:sticky;left:0;z-index:2;background:#fff;font-size:12px}
+.dt-cat-cell{padding:6px 10px 6px 0;white-space:normal;line-height:1.3;position:sticky;left:0;z-index:2;background:#fff;font-size:12px}
 .dt-table tbody tr:hover .dt-cat-cell{background:var(--cb)}
 .dt-cat-cell.lvl0{font-weight:700;color:#000}
 .dt-cat-cell.lvl1{font-weight:300;color:#000;padding-left:12px}
 .dt-cat-cell.lvl2{font-weight:300;color:var(--sl);padding-left:24px}
 .dt-cat-cell.lvl3{font-weight:300;color:var(--sl);padding-left:36px}
-.dt-num{padding:6px 8px;text-align:center;font-size:12px;font-weight:300;color:#000;white-space:nowrap}
-.dt-num.dt-latest{font-weight:700;color:var(--g)}
+.dt-num{padding:6px 4px;text-align:center;font-size:12px;font-weight:300;color:#000;white-space:nowrap}
+.dt-num.dt-latest{font-weight:700;background:#F3F3F3}
+.dt-num.dt-neg{color:var(--c)}
+.dt-table .dt-yoy{border-left:1px solid var(--gr4)}
 
 .md-overlay{display:none;position:fixed;inset:0;background:rgba(5,7,12,.85);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center}
 .md-overlay.active{display:flex}
@@ -733,13 +735,13 @@
 
   <!-- ====================== PANEL TABLE (report-style monthly table) ======================
        Reproduces the BLS Table A layout: expenditure categories (indented by
-       level, matching the report) as rows, months as columns, seasonally
-       adjusted % change from the preceding month as values, plus a final
-       YoY (unadjusted, 12-mo) column.
-       To add a new month: add its label to DTMONTHS (at the front, since
-       months run newest→oldest left to right, right after the YoY column)
-       and its value (at the front of the array) to every row's "vals" in
-       DTROWS, and update each row's "yoy" to the new latest month's figure. -->
+       level, matching the report) as rows, the last DT_SPAN months as columns
+       from oldest to newest (seasonally adjusted % change from the preceding
+       month), and the YoY (unadjusted, 12-mo) column at the end. Negatives in MFO orange; latest month on light-gray background.
+       To add a new month: add its label to DTMONTHS (at the front) and its
+       value (at the front of the array) to every row's "vals" in DTROWS, and
+       update each row's "yoy" to the new latest month's figure. The table
+       then shows the 7 most recent months automatically. -->
   <div class="mp" id="panel-table">
     <div class="bb-wrap" id="tableWrap"></div>
     <div class="cnote">Seasonally adjusted % change from the preceding month. Last column: unadjusted change over the trailing 12 months.</div>
@@ -1141,9 +1143,10 @@ document.addEventListener('keydown',e=>{
 
 /* ============================================================
    TABLE MODULE — report-style monthly table (BLS Table A layout).
-   To add a new month: append its label to DTMONTHS and its value
-   (in the same order) to every row's "vals" array in DTROWS, and
-   update each row's "yoy" to the new latest month's YoY figure.
+   Data arrays run newest→oldest. To add a new month: put its label at
+   the front of DTMONTHS and its value at the front of every row's
+   "vals" in DTROWS, and update each row's "yoy". The table shows the
+   last DT_SPAN months oldest→newest (as in the BLS release) + YoY.
    ============================================================ */
 const DTMONTHS=["Sep '26","Aug '26","Jul '26","Jun '26","May '26","Apr '26","Mar '26","Feb '26","Jan '26"];
 const DTROWS=[
@@ -1169,22 +1172,25 @@ const DTROWS=[
   {lvl:3,name:'Transportation services',vals:[0.6,0.5,0.3,-0.3,-0.6,0.3,0.6,0.2,1.4],yoy:2.7},
   {lvl:3,name:'Medical care services',vals:[0.3,-0.2,0.6,-0.1,0.5,0.0,0.0,0.6,0.3],yoy:2.5},
 ];
+const DT_SPAN=7;
 function dtFmt(v){return (v>0?'+':'')+v.toFixed(1)+'%';}
+function dtCls(v,latest){return 'dt-num'+(latest?' dt-latest':'')+(v<0?' dt-neg':'');}
 function renderTable(){
   const wrap=document.getElementById('tableWrap');
   if(!wrap||wrap.dataset.built)return;
   wrap.dataset.built='1';
-  let html='<table class="dt-table"><thead><tr><th class="dt-cat-h"></th><th class="dt-yoy-h">YoY</th>';
-  DTMONTHS.forEach((m,i)=>{
-    html+=`<th class="dt-month-h${i===0?' dt-latest':''}">${m}</th>`;
+  const idx=[...Array(Math.min(DT_SPAN,DTMONTHS.length)).keys()].reverse(); // oldest → newest
+  let html='<table class="dt-table"><thead><tr><th class="dt-cat-h"></th>';
+  idx.forEach(i=>{
+    html+=`<th class="dt-month-h${i===0?' dt-latest':''}">${DTMONTHS[i]}</th>`;
   });
-  html+='</tr></thead><tbody>';
+  html+='<th class="dt-yoy-h dt-yoy">YoY</th></tr></thead><tbody>';
   DTROWS.forEach(row=>{
     html+=`<tr><td class="dt-cat-cell lvl${row.lvl}">${escH(row.name)}</td>`;
-    html+=`<td class="dt-num">${dtFmt(row.yoy)}</td>`;
-    row.vals.forEach((v,i)=>{
-      html+=`<td class="dt-num${i===0?' dt-latest':''}">${dtFmt(v)}</td>`;
+    idx.forEach(i=>{
+      html+=`<td class="${dtCls(row.vals[i],i===0)}">${dtFmt(row.vals[i])}</td>`;
     });
+    html+=`<td class="${dtCls(row.yoy,false)} dt-yoy">${dtFmt(row.yoy)}</td>`;
     html+='</tr>';
   });
   html+='</tbody></table>';
