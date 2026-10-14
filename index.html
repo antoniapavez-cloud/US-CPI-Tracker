@@ -229,7 +229,7 @@
     <div class="wh-meta">
       <span class="wh-tag">Información pública</span>
       <span class="wh-sub">Periodicidad: Mensual</span>
-      <span class="wh-sub">Última actualización: 11 sep 2026</span>
+      <span class="wh-sub">Última actualización: 14 oct 2026</span>
       <span class="wh-sub">Fuente: <a href="https://www.bls.gov/cpi/" target="_blank" style="color:#969696;text-decoration:none">bls.gov/cpi</a></span>
       <button class="btn-pdf" id="btnPdf" onclick="genPdf()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PDF</button>
     </div>
@@ -254,14 +254,15 @@
           on the "Table" tab. The "PDF" button needs no update — it
           always exports the first month in MMONTHS (the most recent). -->
   <div class="mfo-tabs" id="tabs">
-    <button class="tb active" onclick="sp('ago26',this)">Ago '26</button>
+    <button class="tb active" onclick="sp('sep26',this)">Sep '26</button>
+    <button class="tb" onclick="sp('ago26',this)">Ago '26</button>
     <button class="tb" onclick="sp('jul26',this)">Jul '26</button>
     <button class="tb" onclick="sp('jun26',this)">Jun '26</button>
     <button class="tb" onclick="sp('may26',this)">May '26</button>
-    <button class="tb" onclick="sp('abr26',this)">Apr '26</button>
     <div class="older-wrap">
       <button class="older-btn" id="olderBtn" onclick="toggleOlder(event)">History ▾</button>
       <div class="older-menu" id="olderMenu">
+        <button class="older-item" onclick="sp('abr26',this,'older')">Apr '26</button>
         <button class="older-item" onclick="sp('mar26',this,'older')">Mar '26</button>
         <button class="older-item" onclick="sp('feb26',this,'older')">Feb '26</button>
         <button class="older-item" onclick="sp('ene26',this,'older')">Jan '26</button>
@@ -271,8 +272,61 @@
     <button class="tbg" onclick="sp('table',this)">Table</button>
   </div>
 
+  <!-- ====================== PANEL SEPTEMBER 2026 ====================== -->
+  <div class="mp active" id="panel-sep26">
+    <div class="vtag">Released Oct 14, 2026</div>
+
+    <div class="tr">
+      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.6%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.7%</b></div></div>
+      <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
+        <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.3%</div><div class="ms">YoY: 2.6%</div></div>
+        <div class="mc-sm"><div class="ml">Food</div><div class="mv">0.0%</div><div class="ms">YoY: 2.5%</div></div>
+        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+5.2%</div><div class="ms">YoY: 20.4%</div></div>
+        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.4%</div><div class="ms">YoY: 3.2%</div></div>
+      </div></div>
+    </div>
+
+    <div class="exec">
+      <div class="exec-t">Executive Summary</div>
+      <ul>
+        <li><b>The headline index rose 0.6%</b> in September (seasonally adjusted), after rising 0.4% in August.</li>
+        <li><b>YoY inflation accelerated to 3.7%</b> from 3.4% in August.</li>
+        <li><b>Core inflation held at +0.3%</b> monthly, same as August; the YoY rate rose to 2.6% from 2.4%.</li>
+        <li><b>Gasoline jumped +9.1%</b>, accounting for over half of the total monthly increase. <b>Energy overall rose +5.2%</b>.</li>
+        <li>Next release: <b>November 10, 2026</b> (October data).</li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="st">Category Detail (seasonally adjusted, MoM)</div>
+      <div class="spb">
+        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+9.1%<span class="aru">↑</span></div><div class="spn">YoY: +34.2%</div></div>
+        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
+        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">YoY: -5.0%</div></div>
+        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">+0.7%<span class="aru">↑</span></div><div class="spn">YoY: -1.5%</div></div>
+        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+1.2%<span class="aru">↑</span></div><div class="spn">YoY: +22.4%</div></div>
+        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">YoY: +1.5%</div></div>
+        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.4%</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="st">What moved the index this month</div>
+      <ul class="rl">
+        <li class="ri rh">Gasoline was the main upward driver, rising 9.1% and accounting for over half of the total monthly increase.</li>
+        <li class="ri rm">Shelter accelerated to +0.4%, and used cars and trucks (+0.7%) and airline fares (+1.2%) also rose.</li>
+        <li class="ri rg">Food was unchanged, while communication and prescription drugs fell, partially offsetting the increase.</li>
+      </ul>
+    </div>
+
+    <a class="pdfbtn" href="https://www.bls.gov/cpi/" target="_blank"><span class="picon">📄</span> View full release (BLS, USDL-26-1574)</a>
+    <div style="text-align:right;padding:16px 0 4px">
+      <button class="btn-manual" onclick="document.getElementById('updateModal').classList.add('open')">Manual de actualización</button>
+    </div>
+  </div>
+
   <!-- ====================== PANEL AUGUST 2026 ====================== -->
-  <div class="mp active" id="panel-ago26">
+  <div class="mp" id="panel-ago26">
     <div class="vtag">Released Sep 11, 2026</div>
 
     <div class="tr">
@@ -292,7 +346,7 @@
         <li><b>YoY inflation held at 3.4%</b>, unchanged from July.</li>
         <li><b>Core inflation accelerated to +0.3%</b> monthly (vs. 0.2% in July); the YoY rate eased to 2.4% from 2.5%.</li>
         <li><b>Gasoline jumped +3.9%</b>, accounting for over a third of the total monthly increase. <b>Energy overall rose +2.1%</b>.</li>
-        <li>Next release: <b>October 14, 2026</b> (September data).</li>
+        <li>Next release: <b>October 14, 2026</b> (September data) — already available under the "Sep '26" tab.</li>
       </ul>
     </div>
 
@@ -319,9 +373,6 @@
     </div>
 
     <a class="pdfbtn" href="https://www.bls.gov/cpi/" target="_blank"><span class="picon">📄</span> View full release (BLS, USDL-26-1496)</a>
-    <div style="text-align:right;padding:16px 0 4px">
-      <button class="btn-manual" onclick="document.getElementById('updateModal').classList.add('open')">Manual de actualización</button>
-    </div>
   </div>
 
   <!-- ====================== PANEL JULY 2026 ====================== -->
@@ -345,7 +396,7 @@
         <li><b>YoY inflation eased to 3.4%</b> from 3.5% in June — the second straight month of deceleration after May's 4.2% peak.</li>
         <li><b>Core inflation accelerated to +0.2%</b> monthly (vs. 0.0% in June); shelter accounted for roughly two-thirds of the total increase.</li>
         <li><b>Energy fell again (-1.5%)</b>, much less than June's -5.7%. <b>Airline fares jumped +2.2%</b> after rising just 0.2% the prior month.</li>
-        <li>Next release: <b>September 11, 2026</b> (August data).</li>
+        <li>Next release: <b>September 11, 2026</b> (August data) — already available under the "Ago '26" tab.</li>
       </ul>
     </div>
 
@@ -924,8 +975,21 @@ const MTOPICS=[
   {id:'salud',name:'Medical care'},
   {id:'vestimenta',name:'Apparel'},
 ];
-const MMONTHS=['ago26','jul26','jun26','may26','abr26','mar26','feb26','ene26'];
+const MMONTHS=['sep26','ago26','jul26','jun26','may26','abr26','mar26','feb26','ene26'];
 const MDATA={
+  sep26:{
+    label:'Sep 2026',
+    nucleo:{status:'flat',tag:'Stable',bullets:['Monthly change: <b>+0.3%</b>, same as August.','YoY: <b>2.6%</b> (up from 2.4% in August).','Shelter, recreation and used cars and trucks were among the main drivers.']},
+    alimentos:{status:'pos',tag:'Unchanged',bullets:['Monthly change: <b>0.0%</b>, after rising 0.1% in August.','YoY: <b>2.5%</b> (down from 2.7% in August).','Food at home fell 0.1% while food away from home rose 0.2%.']},
+    energia:{status:'hot',tag:'Main driver',bullets:['Monthly change: <b>+5.2%</b>, after rising 2.1% in August.','YoY: <b>+20.4%</b>.','Gasoline surged 9.1%, accounting for over half of the headline monthly increase.']},
+    vivienda:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.4%</b> (vs. 0.3% in August).','YoY: <b>3.2%</b>.','Lodging away from home rose 2.0%; OER rose 0.3%.']},
+    gasolina:{status:'hot',tag:'Sharp jump',bullets:['Monthly change: <b>+9.1%</b>, after rising 3.9% in August.','YoY: <b>+34.2%</b>.','Accounted for over half of the total monthly increase.']},
+    autos_usados:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.7%</b> (vs. +0.4% in August).','YoY: <b>-1.5%</b> (still below year-ago levels).']},
+    seguro_auto:{status:'neg',tag:'Rebounding',bullets:['Monthly change: <b>+0.1%</b>, after falling 0.8% in August.','YoY: <b>-5.0%</b>, still on a sustained decline.']},
+    tarifas_aereas:{status:'pos',tag:'Decelerating',bullets:['Monthly change: <b>+1.2%</b>, easing from August\'s +2.7%.','YoY: <b>+22.4%</b>.']},
+    salud:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.1%</b>, after falling 0.2% in August.','YoY: <b>+1.5%</b>.','Hospital services rose 0.7% while prescription drugs fell 1.2%.']},
+    vestimenta:{status:'neg',tag:'Rising',bullets:['Monthly change: <b>+0.3%</b>, after being unchanged in August.','YoY: <b>+3.4%</b>.']},
+  },
   ago26:{
     label:'Aug 2026',
     nucleo:{status:'neg',tag:'Accelerating',bullets:['Monthly change: <b>+0.3%</b> (vs. 0.2% in July).','YoY: <b>2.4%</b> (down from 2.5% in July, despite the monthly acceleration).','Gasoline and shelter were the main drivers of the headline increase this month.']},
@@ -1081,29 +1145,29 @@ document.addEventListener('keydown',e=>{
    (in the same order) to every row's "vals" array in DTROWS, and
    update each row's "yoy" to the new latest month's YoY figure.
    ============================================================ */
-const DTMONTHS=["Aug '26","Jul '26","Jun '26","May '26","Apr '26","Mar '26","Feb '26","Jan '26"];
+const DTMONTHS=["Sep '26","Aug '26","Jul '26","Jun '26","May '26","Apr '26","Mar '26","Feb '26","Jan '26"];
 const DTROWS=[
-  {lvl:0,name:'All items',vals:[0.4,0.1,-0.4,0.5,0.6,0.9,0.3,0.2],yoy:3.4},
-  {lvl:1,name:'Food',vals:[0.4,0.1,0.2,0.2,0.5,0.0,0.4,0.2],yoy:2.7},
-  {lvl:2,name:'Food at home',vals:[0.0,-0.1,0.2,0.1,0.7,-0.2,0.4,0.2],yoy:2.2},
-  {lvl:2,name:'Food away from home',vals:[0.3,0.3,0.2,0.3,0.2,0.2,0.3,0.1],yoy:3.4},
-  {lvl:1,name:'Energy',vals:[2.1,-1.5,-5.7,3.9,3.8,10.9,0.6,-1.5],yoy:16.3},
-  {lvl:2,name:'Energy commodities',vals:[4.2,-2.9,-9.5,6.7,5.6,21.3,1.1,-3.3],yoy:28.0},
-  {lvl:3,name:'Gasoline (all types)',vals:[3.9,-2.9,-9.7,7.0,5.4,21.2,0.8,-3.2],yoy:27.4},
-  {lvl:3,name:'Fuel oil',vals:[10.1,-1.7,-9.2,3.8,5.8,30.7,11.1,-5.7],yoy:52.0},
-  {lvl:2,name:'Energy services',vals:[-0.4,0.3,-0.7,0.4,1.6,0.4,0.2,0.2],yoy:4.0},
-  {lvl:3,name:'Electricity',vals:[-0.2,0.1,-1.0,0.6,2.1,0.8,-0.7,-0.1],yoy:3.8},
-  {lvl:3,name:'Utility (piped) gas service',vals:[-1.1,0.7,0.5,-0.5,-0.1,-0.9,3.1,1.0],yoy:4.4},
-  {lvl:1,name:'All items less food and energy',vals:[0.3,0.2,0.0,0.2,0.4,0.2,0.2,0.3],yoy:2.4},
-  {lvl:2,name:'Commodities less food and energy commodities',vals:[0.1,0.2,-0.1,-0.1,0.0,0.1,0.1,0.0],yoy:0.7},
-  {lvl:3,name:'New vehicles',vals:[0.3,0.1,0.0,-0.3,-0.2,0.1,0.0,0.1],yoy:0.6},
-  {lvl:3,name:'Used cars and trucks',vals:[0.4,0.4,-0.2,0.1,0.0,-0.4,-0.4,-1.8],yoy:-2.3},
-  {lvl:3,name:'Apparel',vals:[0.0,0.1,-0.6,0.3,0.6,1.0,1.3,0.3],yoy:3.6},
-  {lvl:3,name:'Medical care commodities',vals:[-0.2,-0.6,-0.2,-0.7,-0.4,-1.0,0.0,-0.1],yoy:-2.7},
-  {lvl:2,name:'Services less energy services',vals:[0.3,0.2,0.0,0.3,0.5,0.2,0.3,0.4],yoy:3.0},
-  {lvl:3,name:'Shelter',vals:[0.3,0.1,0.1,0.3,0.6,0.3,0.2,0.2],yoy:3.0},
-  {lvl:3,name:'Transportation services',vals:[0.5,0.3,-0.3,-0.6,0.3,0.6,0.2,1.4],yoy:2.4},
-  {lvl:3,name:'Medical care services',vals:[-0.2,0.6,-0.1,0.5,0.0,0.0,0.6,0.3],yoy:2.5},
+  {lvl:0,name:'All items',vals:[0.6,0.4,0.1,-0.4,0.5,0.6,0.9,0.3,0.2],yoy:3.7},
+  {lvl:1,name:'Food',vals:[0.0,0.1,0.1,0.2,0.2,0.5,0.0,0.4,0.2],yoy:2.5},
+  {lvl:2,name:'Food at home',vals:[-0.1,0.0,-0.1,0.2,0.1,0.7,-0.2,0.4,0.2],yoy:1.8},
+  {lvl:2,name:'Food away from home',vals:[0.2,0.3,0.3,0.2,0.3,0.2,0.2,0.3,0.1],yoy:3.5},
+  {lvl:1,name:'Energy',vals:[5.2,2.1,-1.5,-5.7,3.9,3.8,10.9,0.6,-1.5],yoy:20.4},
+  {lvl:2,name:'Energy commodities',vals:[9.3,4.2,-2.9,-9.5,6.7,5.6,21.3,1.1,-3.3],yoy:35.3},
+  {lvl:3,name:'Gasoline (all types)',vals:[9.1,3.9,-2.9,-9.7,7.0,5.4,21.2,0.8,-3.2],yoy:34.2},
+  {lvl:3,name:'Fuel oil',vals:[15.3,10.1,-1.7,-9.2,3.8,5.8,30.7,11.1,-5.7],yoy:74.2},
+  {lvl:2,name:'Energy services',vals:[0.1,-0.4,0.3,-0.7,0.4,1.6,0.4,0.2,0.2],yoy:4.6},
+  {lvl:3,name:'Electricity',vals:[0.2,-0.2,0.1,-1.0,0.6,2.1,0.8,-0.7,-0.1],yoy:4.4},
+  {lvl:3,name:'Utility (piped) gas service',vals:[-0.3,-1.1,0.7,0.5,-0.5,-0.1,-0.9,3.1,1.0],yoy:5.0},
+  {lvl:1,name:'All items less food and energy',vals:[0.3,0.3,0.2,0.0,0.2,0.4,0.2,0.2,0.3],yoy:2.6},
+  {lvl:2,name:'Commodities less food and energy commodities',vals:[0.3,0.1,0.2,-0.1,-0.1,0.0,0.1,0.1,0.0],yoy:0.7},
+  {lvl:3,name:'New vehicles',vals:[0.2,0.3,0.1,0.0,-0.3,-0.2,0.1,0.0,0.1],yoy:0.6},
+  {lvl:3,name:'Used cars and trucks',vals:[0.7,0.4,0.4,-0.2,0.1,0.0,-0.4,-0.4,-1.8],yoy:-1.5},
+  {lvl:3,name:'Apparel',vals:[0.3,0.0,0.1,-0.6,0.3,0.6,1.0,1.3,0.3],yoy:3.4},
+  {lvl:3,name:'Medical care commodities',vals:[-0.7,-0.2,-0.6,-0.2,-0.7,-0.4,-1.0,0.0,-0.1],yoy:-3.3},
+  {lvl:2,name:'Services less energy services',vals:[0.4,0.3,0.2,0.0,0.3,0.5,0.2,0.3,0.4],yoy:3.1},
+  {lvl:3,name:'Shelter',vals:[0.4,0.3,0.1,0.1,0.3,0.6,0.3,0.2,0.2],yoy:3.2},
+  {lvl:3,name:'Transportation services',vals:[0.6,0.5,0.3,-0.3,-0.6,0.3,0.6,0.2,1.4],yoy:2.7},
+  {lvl:3,name:'Medical care services',vals:[0.3,-0.2,0.6,-0.1,0.5,0.0,0.0,0.6,0.3],yoy:2.5},
 ];
 function dtFmt(v){return (v>0?'+':'')+v.toFixed(1)+'%';}
 function renderTable(){
