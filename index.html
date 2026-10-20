@@ -811,7 +811,6 @@ function sp(id,btn,source){
   document.querySelectorAll('.older-item').forEach(t=>t.classList.remove('active'));
   const olderBtn=document.getElementById('olderBtn');
   document.getElementById('panel-'+id).classList.add('active');
-  if(id==='matrix'){const w=document.getElementById('matrixWrap');w.scrollLeft=w.scrollWidth;} // show latest month
   if(source==='older'){
     btn.classList.add('active');
     if(olderBtn)olderBtn.classList.add('has-active');
@@ -964,7 +963,7 @@ async function genPdf(){
 /* ============================================================
    MATRIX MODULE — Category x Month.
    To add a new month: add its key to MMONTHS (at the front; the
-   table displays oldest → newest, left to right) and its object in MDATA with the same category
+   table displays newest → oldest, left to right) and its object in MDATA with the same category
    ids already used in MTOPICS.
    ============================================================ */
 const MTOPICS=[
@@ -1109,7 +1108,7 @@ function renderMatrix(){
     return;
   }
   let html='<table class="bb-table"><thead><tr><th class="bb-topic-h"></th>';
-  const cols=[...MMONTHS].reverse(); // oldest → newest (left to right)
+  const cols=[...MMONTHS]; // newest → oldest (left to right)
   cols.forEach(m=>{
     html+=`<th class="bb-month-h${m===MMONTHS[0]?' bb-latest':''}">${MDATA[m].label}</th>`;
   });
