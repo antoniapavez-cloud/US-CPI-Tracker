@@ -101,7 +101,7 @@
 .kvn{font-size:12px;color:#000;font-weight:300;line-height:1.4}
 
 .spb{background:var(--gr4);border-radius:5px;overflow:hidden}
-.spr{display:grid;grid-template-columns:175px 55px 1fr;gap:0;padding:7px 12px;border-bottom:1px solid #d8d8d8;align-items:center}
+.spr{display:grid;grid-template-columns:175px 55px 1fr;gap:0;padding:3px 12px;border-bottom:1px solid #d8d8d8;align-items:center}
 .spr:last-child{border-bottom:none}
 .spl{font-size:12px;color:var(--sl);font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .spv{font-size:12px;font-weight:700;color:#000;text-align:center;white-space:nowrap}
@@ -213,11 +213,14 @@
 /* PDF export stage — built off-screen only while generating */
 #pdfStage{position:fixed;left:-20000px;top:0;width:720px;background:#fff;text-rendering:geometricPrecision;font-variant-ligatures:none;font-kerning:normal;-webkit-font-smoothing:antialiased}
 #pdfStage .pdf-page{position:relative;width:720px;height:960px;background:#fff;overflow:hidden}
-#pdfStage .pdf-logo{position:absolute;left:26px;top:26px;width:153px;height:59px}
+#pdfStage .pdf-logo{position:absolute;left:26px;top:26px;width:184px;height:71px}
 #pdfStage .pdf-title{position:absolute;left:37px;top:97px;font-size:32px;line-height:32px;font-weight:700;color:#72BF44;white-space:nowrap}
-#pdfStage .pdf-sub{position:absolute;left:37px;top:132.2px;font-size:21.33px;line-height:21.33px;font-weight:300;color:#000;white-space:nowrap}
+#pdfStage .pdf-sub{position:absolute;left:37px;top:132.2px;font-size:20px;line-height:20px;font-weight:300;color:#000;white-space:nowrap}
 #pdfStage .pdf-content{position:absolute;left:44px;width:632px}
-#pdfStage .pdf-block{display:flow-root;margin-bottom:16px}
+#pdfStage .pdf-block{display:flow-root;margin-bottom:12px}
+#pdfStage .exec ul{gap:7px}
+#pdfStage .sec{padding:11px 15px}
+#pdfStage .st{margin-bottom:8px;padding-bottom:6px}
 #pdfStage .pdf-block>:last-child{margin-bottom:0}
 #pdfStage .pdf-foot{position:absolute;left:44px;width:632px;top:918px;display:flex;justify-content:space-between;font-size:9px;line-height:12px;font-weight:300;color:#969696}
 #pdfStage .ms,#pdfStage .spl,#pdfStage .iit,#pdfStage .iib{white-space:normal;overflow:visible;text-overflow:clip}
@@ -301,7 +304,7 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (seasonally adjusted, MoM)</div>
+      <div class="st">Category Detail (MoM SA · YoY)</div>
       <div class="spb">
         <div class="spr"><div class="spl">Gasoline</div><div class="spv">+9.1%<span class="aru">↑</span></div><div class="spn">YoY: +34.2%</div></div>
         <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
@@ -354,7 +357,7 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (seasonally adjusted, MoM)</div>
+      <div class="st">Category Detail (MoM SA · YoY)</div>
       <div class="spb">
         <div class="spr"><div class="spl">Gasoline</div><div class="spv">+3.9%<span class="aru">↑</span></div><div class="spn">YoY: +27.4%</div></div>
         <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.1%</div></div>
@@ -404,7 +407,7 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (seasonally adjusted, MoM)</div>
+      <div class="st">Category Detail (MoM SA · YoY)</div>
       <div class="spb">
         <div class="spr"><div class="spl">Gasoline</div><div class="spv">-2.9%<span class="ard">↓</span></div><div class="spn">YoY: +24.6%</div></div>
         <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.2%</div></div>
@@ -454,7 +457,7 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (seasonally adjusted, MoM)</div>
+      <div class="st">Category Detail (MoM SA · YoY)</div>
       <div class="spb">
         <div class="spr"><div class="spl">Gasoline</div><div class="spv">-9.7%<span class="ard">↓</span></div><div class="spn">YoY: +26.7%</div></div>
         <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
@@ -504,7 +507,7 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (seasonally adjusted, MoM)</div>
+      <div class="st">Category Detail (MoM SA · YoY)</div>
       <div class="spb">
         <div class="spr"><div class="spl">Gasoline</div><div class="spv">+7.0%<span class="aru">↑</span></div><div class="spn">YoY: +40.5%</div></div>
         <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
@@ -554,7 +557,7 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (seasonally adjusted, MoM)</div>
+      <div class="st">Category Detail (MoM SA · YoY)</div>
       <div class="spb">
         <div class="spr"><div class="spl">Gasoline</div><div class="spv">+5.4%<span class="aru">↑</span></div><div class="spn">YoY: +28.4%</div></div>
         <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.5%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
@@ -604,7 +607,7 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (seasonally adjusted, MoM)</div>
+      <div class="st">Category Detail (MoM SA · YoY)</div>
       <div class="spb">
         <div class="spr"><div class="spl">Gasoline</div><div class="spv">+21.2%<span class="aru">↑</span></div><div class="spn">YoY: +18.9%</div></div>
         <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.1%</div></div>
@@ -654,7 +657,7 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (seasonally adjusted, MoM)</div>
+      <div class="st">Category Detail (MoM SA · YoY)</div>
       <div class="spb">
         <div class="spr"><div class="spl">Gasoline</div><div class="spv">+0.8%<span class="aru">↑</span></div><div class="spn">YoY: -5.6%</div></div>
         <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.2%</div></div>
@@ -704,7 +707,7 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (seasonally adjusted, MoM)</div>
+      <div class="st">Category Detail (MoM SA · YoY)</div>
       <div class="spb">
         <div class="spr"><div class="spl">Gasoline</div><div class="spv">-3.2%<span class="ard">↓</span></div><div class="spn">YoY: -7.5%</div></div>
         <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
@@ -838,7 +841,7 @@ const PDF_CFG={title:'US CPI Tracker',fileName:'US CPI Tracker'};
 const PDF_LIBS=['https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'];
 const PDF_FONTS=['300 16px Aller','italic 300 16px Aller','400 16px Aller','italic 400 16px Aller','700 16px Aller','italic 700 16px Aller'];
-const PDF_PAGE={w:720,h:960,top1:172,topN:104,bottom:900,gap:16};
+const PDF_PAGE={w:720,h:960,top1:172,topN:104,bottom:900,gap:12};
 const MFO_LOGO='data:image/png;base64,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';
 const ES_MONTH={Jan:'Enero',Feb:'Febrero',Mar:'Marzo',Apr:'Abril',May:'Mayo',Jun:'Junio',Jul:'Julio',Aug:'Agosto',Sep:'Septiembre',Oct:'Octubre',Nov:'Noviembre',Dec:'Diciembre'};
 const MON_NUM={Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
