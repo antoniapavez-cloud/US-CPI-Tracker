@@ -64,6 +64,7 @@
 .mv{font-size:16px;font-weight:700;color:#000;line-height:1}
 .ms{font-size:11px;color:#000;margin-top:4px;font-weight:300}
 .mc.ffr{min-width:120px;flex-shrink:0}
+.mc-sm.mc-g{background:var(--g4);border-color:var(--g2)}
 .ms-exp{font-size:10.5px;color:var(--sl);margin-top:3px;font-weight:300}
 .mgrp{border:1px solid #d4d4d4;border-radius:6px;padding:8px 10px 10px;flex:1}
 .mgrp-title{font-size:9px;color:var(--sl);text-transform:uppercase;letter-spacing:.06em;font-weight:300;margin-bottom:7px}
@@ -155,6 +156,34 @@
 .bb-empty-state .bb-es-icon{font-size:32px;margin-bottom:10px;opacity:.5}
 .bb-empty-state .bb-es-title{font-size:12.5px;font-weight:700;margin-bottom:4px;color:#000}
 
+.ptab{overflow-x:auto}
+.pt-table{border-collapse:collapse;width:100%;table-layout:fixed}
+.pt-table th{font-size:9.5px;font-weight:700;color:#000;text-align:center;vertical-align:middle;padding:3px 1px 5px;line-height:1.15;border-bottom:1px solid var(--gr4);text-transform:uppercase;letter-spacing:.02em}
+.pt-table th.pt-cat{width:165px;text-align:left}
+.pt-table th.pt-year{border-bottom:1px solid var(--gr3);padding:2px 1px 3px}
+.pt-table th.pt-year+th.pt-year{border-left:2px solid #fff}
+.pt-table th.pt-yoy-top{border-bottom:none}
+.pt-table td{font-size:10.5px;font-weight:300;text-align:center;padding:2.5px 1px;border-bottom:1px solid var(--gr4);white-space:nowrap}
+.pt-table tr:last-child td{border-bottom:none}
+.pt-table td.pt-cat{text-align:left;white-space:normal;line-height:1.2;color:#000}
+.pt-table td.pt-cat.l0{font-weight:700}
+.pt-table td.pt-cat.l1{padding-left:7px}
+.pt-table td.pt-cat.l2{padding-left:14px;color:var(--sl)}
+.pt-table td.pt-cat.l3{padding-left:21px;color:var(--sl)}
+.pt-table .pt-cur,.pt-table tbody tr td.pt-cur{background:var(--g4);font-weight:700}
+.pt-table td.pt-cur.pt-neg{color:#C0552E}
+.pt-table td.pt-cat.pt-b{font-weight:700}
+.pt-table tr.pt-bold td{font-weight:700}
+.pt-table td.pt-cat{white-space:nowrap}
+.pt-table td.pt-cat .pt-short{cursor:help;border-bottom:1px dotted var(--gr3)}
+#pdfStage .pt-table td.pt-cat .pt-short{border-bottom:none}
+.pt-table tr.pt-r0 td{background:var(--gr3)}
+.pt-table tr.pt-r1 td{background:var(--gr4)}
+.pt-table tr.pt-r0 .pt-na{color:#808080}
+.pt-table .pt-neg{color:var(--c)}
+.pt-table .pt-yoy{border-left:1px solid var(--gr4);width:40px}
+.pt-table .pt-na{color:var(--gr3)}
+.pt-note{font-size:9px;line-height:1.35;color:var(--sl);font-style:italic;margin-top:6px}
 .dt-table{border-collapse:collapse;width:auto}
 .dt-table thead th{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#000;padding:8px 4px;text-align:center;vertical-align:middle;white-space:nowrap;border-bottom:1px solid var(--gr4);background:#fff}
 .dt-table thead th.dt-cat-h{text-align:left;padding-left:0;width:200px;min-width:200px;position:sticky;left:0;z-index:3;background:#fff}
@@ -256,8 +285,8 @@
           from most recent to oldest.
        4) Add the month to MMONTHS (at the front) and its object in
           MDATA so it also shows up on the "Evolution" tab, and add its
-          row values to MTABLE_MONTHS/MTABLE_DATA so it also shows up
-          on the "Table" tab. The "PDF" button needs no update — it
+          row values to DTMONTHS/DTROWS (and its YoY column to DT_YOY)
+          so the "Last 12 Months by Category" table updates. The "PDF" button needs no update — it
           always exports the first month in MMONTHS (the most recent). -->
   <div class="mfo-tabs" id="tabs">
     <button class="tb active" onclick="sp('sep26',this)">Sep '26</button>
@@ -275,7 +304,6 @@
       </div>
     </div>
     <button class="tbg tbg-first" onclick="sp('matrix',this)">Evolution</button>
-    <button class="tbg" onclick="sp('table',this)">Table</button>
   </div>
 
   <!-- ====================== PANEL SEPTEMBER 2026 ====================== -->
@@ -283,12 +311,12 @@
     <div class="vtag">Released Oct 14, 2026</div>
 
     <div class="tr">
-      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.6%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.7%</b></div><div class="ms-exp">Expected: +0.6%</div></div>
+      <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.6%<span class="aru" style="font-size:14px">▲</span></div><div class="ms-exp">Expected: +0.6%</div><div class="ms">YoY: <b>3.7%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
         <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.3%</div><div class="ms">YoY: 2.6%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">0.0%</div><div class="ms">YoY: 2.5%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+5.2%</div><div class="ms">YoY: 20.4%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.4%</div><div class="ms">YoY: 3.2%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Food</div><div class="mv">0.0%</div><div class="ms">YoY: 2.5%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Energy</div><div class="mv">+5.2%</div><div class="ms">YoY: 20.4%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Shelter</div><div class="mv">+0.4%</div><div class="ms">YoY: 3.2%</div></div>
       </div></div>
     </div>
 
@@ -304,16 +332,8 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (MoM SA · YoY)</div>
-      <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+9.1%<span class="aru">↑</span></div><div class="spn">YoY: +34.2%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">YoY: -5.0%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">+0.7%<span class="aru">↑</span></div><div class="spn">YoY: -1.5%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+1.2%<span class="aru">↑</span></div><div class="spn">YoY: +22.4%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">YoY: +1.5%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.4%</div></div>
-      </div>
+      <div class="st">Last 12 Months by Category</div>
+      <div class="ptab" data-key="sep26"></div>
     </div>
 
     <div class="sec">
@@ -339,9 +359,9 @@
       <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.4%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.4%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
         <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.3%</div><div class="ms">YoY: 2.4%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.1%</div><div class="ms">YoY: 2.7%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+2.1%</div><div class="ms">YoY: 16.3%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.3%</div><div class="ms">YoY: 3.0%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Food</div><div class="mv">+0.1%</div><div class="ms">YoY: 2.7%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Energy</div><div class="mv">+2.1%</div><div class="ms">YoY: 16.3%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Shelter</div><div class="mv">+0.3%</div><div class="ms">YoY: 3.0%</div></div>
       </div></div>
     </div>
 
@@ -357,16 +377,8 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (MoM SA · YoY)</div>
-      <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+3.9%<span class="aru">↑</span></div><div class="spn">YoY: +27.4%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.1%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-0.8%<span class="ard">↓</span></div><div class="spn">YoY: -5.1%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">+0.4%<span class="aru">↑</span></div><div class="spn">YoY: -2.3%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.7%<span class="aru">↑</span></div><div class="spn">YoY: +23.4%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">-0.2%<span class="ard">↓</span></div><div class="spn">YoY: +1.6%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">0.0%<span class="ard" style="color:var(--sl)">–</span></div><div class="spn">YoY: +3.6%</div></div>
-      </div>
+      <div class="st">Last 12 Months by Category</div>
+      <div class="ptab" data-key="ago26"></div>
     </div>
 
     <div class="sec">
@@ -389,9 +401,9 @@
       <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.1%<span class="ard" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.4%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
         <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.5%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.1%</div><div class="ms">YoY: 3.0%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">-1.5%</div><div class="ms">YoY: 14.7%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.1%</div><div class="ms">YoY: 3.2%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Food</div><div class="mv">+0.1%</div><div class="ms">YoY: 3.0%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Energy</div><div class="mv">-1.5%</div><div class="ms">YoY: 14.7%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Shelter</div><div class="mv">+0.1%</div><div class="ms">YoY: 3.2%</div></div>
       </div></div>
     </div>
 
@@ -407,16 +419,8 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (MoM SA · YoY)</div>
-      <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">-2.9%<span class="ard">↓</span></div><div class="spn">YoY: +24.6%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.2%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-0.3%<span class="ard">↓</span></div><div class="spn">YoY: -4.5% (still declining)</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">+0.4%<span class="aru">↑</span></div><div class="spn">YoY: -1.9%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.2%<span class="aru">↑</span></div><div class="spn">YoY: +25.5%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.4%<span class="aru">↑</span></div><div class="spn">YoY: +1.7%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">YoY: +3.9%</div></div>
-      </div>
+      <div class="st">Last 12 Months by Category</div>
+      <div class="ptab" data-key="jul26"></div>
     </div>
 
     <div class="sec">
@@ -439,9 +443,9 @@
       <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">-0.4%<span class="ard" style="font-size:14px">▼</span></div><div class="ms">YoY: <b>3.5%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
         <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">0.0%</div><div class="ms">YoY: 2.6%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.0%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">-5.7%</div><div class="ms">YoY: 15.7%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.1%</div><div class="ms">YoY: 3.3%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.0%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Energy</div><div class="mv">-5.7%</div><div class="ms">YoY: 15.7%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Shelter</div><div class="mv">+0.1%</div><div class="ms">YoY: 3.3%</div></div>
       </div></div>
     </div>
 
@@ -457,16 +461,8 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (MoM SA · YoY)</div>
-      <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">-9.7%<span class="ard">↓</span></div><div class="spn">YoY: +26.7%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-2.0%<span class="ard">↓</span></div><div class="spn">YoY: -4.1%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-0.2%<span class="ard">↓</span></div><div class="spn">YoY: -1.8%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +26.5%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">-0.1%<span class="ard">↓</span></div><div class="spn">YoY: +2.0%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">-0.6%<span class="ard">↓</span></div><div class="spn">YoY: +3.9%</div></div>
-      </div>
+      <div class="st">Last 12 Months by Category</div>
+      <div class="ptab" data-key="jun26"></div>
     </div>
 
     <div class="sec">
@@ -489,9 +485,9 @@
       <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.5%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>4.2%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
         <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.9%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.1%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+3.9%</div><div class="ms">YoY: 23.5%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.3%</div><div class="ms">YoY: 3.4%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.1%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Energy</div><div class="mv">+3.9%</div><div class="ms">YoY: 23.5%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Shelter</div><div class="mv">+0.3%</div><div class="ms">YoY: 3.4%</div></div>
       </div></div>
     </div>
 
@@ -507,16 +503,8 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (MoM SA · YoY)</div>
-      <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+7.0%<span class="aru">↑</span></div><div class="spn">YoY: +40.5%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-1.7%<span class="ard">↓</span></div><div class="spn">YoY: -2.0%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">YoY: -2.0%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.7%<span class="aru">↑</span></div><div class="spn">YoY: +26.7%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +2.6%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +4.8%</div></div>
-      </div>
+      <div class="st">Last 12 Months by Category</div>
+      <div class="ptab" data-key="may26"></div>
     </div>
 
     <div class="sec">
@@ -539,9 +527,9 @@
       <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.6%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.8%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
         <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.4%</div><div class="ms">YoY: 2.8%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.5%</div><div class="ms">YoY: 3.2%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+3.8%</div><div class="ms">YoY: 17.9%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.6%</div><div class="ms">YoY: 3.3%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Food</div><div class="mv">+0.5%</div><div class="ms">YoY: 3.2%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Energy</div><div class="mv">+3.8%</div><div class="ms">YoY: 17.9%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Shelter</div><div class="mv">+0.6%</div><div class="ms">YoY: 3.3%</div></div>
       </div></div>
     </div>
 
@@ -557,16 +545,8 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (MoM SA · YoY)</div>
-      <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+5.4%<span class="aru">↑</span></div><div class="spn">YoY: +28.4%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.5%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">+0.1%<span class="aru">↑</span></div><div class="spn">YoY: +0.2%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">0.0%<span class="ard" style="color:var(--sl)">–</span></div><div class="spn">YoY: -2.7%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.8%<span class="aru">↑</span></div><div class="spn">YoY: +20.7%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">-0.1%<span class="ard">↓</span></div><div class="spn">YoY: +2.5%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.6%<span class="aru">↑</span></div><div class="spn">YoY: +4.2%</div></div>
-      </div>
+      <div class="st">Last 12 Months by Category</div>
+      <div class="ptab" data-key="abr26"></div>
     </div>
 
     <div class="sec">
@@ -589,9 +569,9 @@
       <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.9%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>3.3%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
         <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.6%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">0.0%</div><div class="ms">YoY: 2.7%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+10.9%</div><div class="ms">YoY: 12.5%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.3%</div><div class="ms">YoY: 3.0%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Food</div><div class="mv">0.0%</div><div class="ms">YoY: 2.7%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Energy</div><div class="mv">+10.9%</div><div class="ms">YoY: 12.5%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Shelter</div><div class="mv">+0.3%</div><div class="ms">YoY: 3.0%</div></div>
       </div></div>
     </div>
 
@@ -607,16 +587,8 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (MoM SA · YoY)</div>
-      <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+21.2%<span class="aru">↑</span></div><div class="spn">YoY: +18.9%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.1%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">0.0%<span class="ard" style="color:var(--sl)">–</span></div><div class="spn">YoY: +0.8%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-0.4%<span class="ard">↓</span></div><div class="spn">YoY: -3.2%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+2.7%<span class="aru">↑</span></div><div class="spn">YoY: +14.9%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">-0.2%<span class="ard">↓</span></div><div class="spn">YoY: +3.1%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+1.0%<span class="aru">↑</span></div><div class="spn">YoY: +3.4%</div></div>
-      </div>
+      <div class="st">Last 12 Months by Category</div>
+      <div class="ptab" data-key="mar26"></div>
     </div>
 
     <div class="sec">
@@ -639,9 +611,9 @@
       <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.3%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>2.4%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
         <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.5%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.4%</div><div class="ms">YoY: 3.1%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">+0.6%</div><div class="ms">YoY: 0.5%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.0%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Food</div><div class="mv">+0.4%</div><div class="ms">YoY: 3.1%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Energy</div><div class="mv">+0.6%</div><div class="ms">YoY: 0.5%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Shelter</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.0%</div></div>
       </div></div>
     </div>
 
@@ -657,16 +629,8 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (MoM SA · YoY)</div>
-      <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">+0.8%<span class="aru">↑</span></div><div class="spn">YoY: -5.6%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.2%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-0.3%<span class="ard">↓</span></div><div class="spn">YoY: +0.2%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-0.4%<span class="ard">↓</span></div><div class="spn">YoY: -3.2%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+1.4%<span class="aru">↑</span></div><div class="spn">YoY: +7.1%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.5%<span class="aru">↑</span></div><div class="spn">YoY: +3.4%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+1.3%<span class="aru">↑</span></div><div class="spn">YoY: +2.5%</div></div>
-      </div>
+      <div class="st">Last 12 Months by Category</div>
+      <div class="ptab" data-key="feb26"></div>
     </div>
 
     <div class="sec">
@@ -689,9 +653,9 @@
       <div class="mc ffr"><div class="ml">Headline (MoM, SA)</div><div class="mv">+0.2%<span class="aru" style="font-size:14px">▲</span></div><div class="ms">YoY: <b>2.4%</b></div></div>
       <div class="mgrp"><div class="mgrp-title">Other key components</div><div class="mgrp-inner">
         <div class="mc-sm"><div class="ml">Core inflation</div><div class="mv">+0.3%</div><div class="ms">YoY: 2.5%</div></div>
-        <div class="mc-sm"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.9%</div></div>
-        <div class="mc-sm"><div class="ml">Energy</div><div class="mv">-1.5%</div><div class="ms">YoY: -0.1%</div></div>
-        <div class="mc-sm"><div class="ml">Shelter</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.0%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Food</div><div class="mv">+0.2%</div><div class="ms">YoY: 2.9%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Energy</div><div class="mv">-1.5%</div><div class="ms">YoY: -0.1%</div></div>
+        <div class="mc-sm mc-g"><div class="ml">Shelter</div><div class="mv">+0.2%</div><div class="ms">YoY: 3.0%</div></div>
       </div></div>
     </div>
 
@@ -707,16 +671,8 @@
     </div>
 
     <div class="sec">
-      <div class="st">Category Detail (MoM SA · YoY)</div>
-      <div class="spb">
-        <div class="spr"><div class="spl">Gasoline</div><div class="spv">-3.2%<span class="ard">↓</span></div><div class="spn">YoY: -7.5%</div></div>
-        <div class="spr"><div class="spl">Owners' equivalent rent (OER)</div><div class="spv">+0.2%<span class="aru">↑</span></div><div class="spn">YoY: +3.3%</div></div>
-        <div class="spr"><div class="spl">Motor vehicle insurance</div><div class="spv">-0.4%<span class="ard">↓</span></div><div class="spn">YoY: +0.5%</div></div>
-        <div class="spr"><div class="spl">Used cars and trucks</div><div class="spv">-1.8%<span class="ard">↓</span></div><div class="spn">YoY: -2.0%</div></div>
-        <div class="spr"><div class="spl">Airline fares</div><div class="spv">+6.5%<span class="aru">↑</span></div><div class="spn">YoY: +2.2%</div></div>
-        <div class="spr"><div class="spl">Medical care</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +3.2%</div></div>
-        <div class="spr"><div class="spl">Apparel</div><div class="spv">+0.3%<span class="aru">↑</span></div><div class="spn">YoY: +1.7%</div></div>
-      </div>
+      <div class="st">Last 12 Months by Category</div>
+      <div class="ptab" data-key="ene26"></div>
     </div>
 
     <div class="sec">
@@ -735,20 +691,6 @@
   <div class="mp" id="panel-matrix">
     <div class="bb-wrap" id="matrixWrap"></div>
     <div class="cnote">Click a badge to see monthly and YoY detail for that category.</div>
-  </div>
-
-  <!-- ====================== PANEL TABLE (report-style monthly table) ======================
-       Reproduces the BLS Table A layout: expenditure categories (indented by
-       level, matching the report) as rows, the last DT_SPAN months as columns
-       from oldest to newest (seasonally adjusted % change from the preceding
-       month), and the YoY (unadjusted, 12-mo) column at the end. Negatives in MFO orange; latest month on light-gray background.
-       To add a new month: add its label to DTMONTHS (at the front) and its
-       value (at the front of the array) to every row's "vals" in DTROWS, and
-       update each row's "yoy" to the new latest month's figure. The table
-       then shows the 7 most recent months automatically. -->
-  <div class="mp" id="panel-table">
-    <div class="bb-wrap" id="tableWrap"></div>
-    <div class="cnote">Seasonally adjusted % change from the preceding month. Last column: unadjusted change over the trailing 12 months.</div>
   </div>
 
   <!-- ====================== MODALS ====================== -->
@@ -882,6 +824,9 @@ function pdfBlocks(panel){
     if(carry){b.appendChild(carry);carry=null;}
     b.appendChild(c);blocks.push(b);
   });
+  // the 12-month Table A goes last, so the summary + "What moved" share page 1
+  const t=blocks.findIndex(b=>b.querySelector('.ptab'));
+  if(t>-1)blocks.push(blocks.splice(t,1)[0]);
   return blocks;
 }
 
@@ -1147,63 +1092,88 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ============================================================
-   TABLE MODULE — report-style monthly table (BLS Table A layout).
-   Data arrays run newest→oldest. To add a new month: put its label at
-   the front of DTMONTHS and its value at the front of every row's
-   "vals" in DTROWS, and update each row's "yoy". The table shows the
-   last DT_SPAN months oldest→newest (as in the BLS release) + YoY.
+   TABLE DATA — BLS Table A rows (feeds each panel's "Last 12 Months by
+   Category" table). Arrays run newest→oldest. To add a new month: put its
+   label at the front of DTMONTHS, its value at the front of every row's
+   "vals" in DTROWS, update each row's "yoy" and add the month to DT_YOY.
    ============================================================ */
-const DTMONTHS=["Sep '26","Aug '26","Jul '26","Jun '26","May '26","Apr '26","Mar '26","Feb '26","Jan '26"];
+const DTMONTHS=["Sep '26","Aug '26","Jul '26","Jun '26","May '26","Apr '26","Mar '26","Feb '26","Jan '26","Dec '25","Nov '25","Oct '25","Sep '25","Aug '25","Jul '25"];
 const DTROWS=[
-  {lvl:0,name:'All items',vals:[0.6,0.4,0.1,-0.4,0.5,0.6,0.9,0.3,0.2],yoy:3.7},
-  {lvl:1,name:'Food',vals:[0.0,0.1,0.1,0.2,0.2,0.5,0.0,0.4,0.2],yoy:2.5},
-  {lvl:2,name:'Food at home',vals:[-0.1,0.0,-0.1,0.2,0.1,0.7,-0.2,0.4,0.2],yoy:1.8},
-  {lvl:2,name:'Food away from home',vals:[0.2,0.3,0.3,0.2,0.3,0.2,0.2,0.3,0.1],yoy:3.5},
-  {lvl:1,name:'Energy',vals:[5.2,2.1,-1.5,-5.7,3.9,3.8,10.9,0.6,-1.5],yoy:20.4},
-  {lvl:2,name:'Energy commodities',vals:[9.3,4.2,-2.9,-9.5,6.7,5.6,21.3,1.1,-3.3],yoy:35.3},
-  {lvl:3,name:'Gasoline (all types)',vals:[9.1,3.9,-2.9,-9.7,7.0,5.4,21.2,0.8,-3.2],yoy:34.2},
-  {lvl:3,name:'Fuel oil',vals:[15.3,10.1,-1.7,-9.2,3.8,5.8,30.7,11.1,-5.7],yoy:74.2},
-  {lvl:2,name:'Energy services',vals:[0.1,-0.4,0.3,-0.7,0.4,1.6,0.4,0.2,0.2],yoy:4.6},
-  {lvl:3,name:'Electricity',vals:[0.2,-0.2,0.1,-1.0,0.6,2.1,0.8,-0.7,-0.1],yoy:4.4},
-  {lvl:3,name:'Utility (piped) gas service',vals:[-0.3,-1.1,0.7,0.5,-0.5,-0.1,-0.9,3.1,1.0],yoy:5.0},
-  {lvl:1,name:'All items less food and energy',vals:[0.3,0.3,0.2,0.0,0.2,0.4,0.2,0.2,0.3],yoy:2.6},
-  {lvl:2,name:'Commodities less food and energy commodities',vals:[0.3,0.1,0.2,-0.1,-0.1,0.0,0.1,0.1,0.0],yoy:0.7},
-  {lvl:3,name:'New vehicles',vals:[0.2,0.3,0.1,0.0,-0.3,-0.2,0.1,0.0,0.1],yoy:0.6},
-  {lvl:3,name:'Used cars and trucks',vals:[0.7,0.4,0.4,-0.2,0.1,0.0,-0.4,-0.4,-1.8],yoy:-1.5},
-  {lvl:3,name:'Apparel',vals:[0.3,0.0,0.1,-0.6,0.3,0.6,1.0,1.3,0.3],yoy:3.4},
-  {lvl:3,name:'Medical care commodities',vals:[-0.7,-0.2,-0.6,-0.2,-0.7,-0.4,-1.0,0.0,-0.1],yoy:-3.3},
-  {lvl:2,name:'Services less energy services',vals:[0.4,0.3,0.2,0.0,0.3,0.5,0.2,0.3,0.4],yoy:3.1},
-  {lvl:3,name:'Shelter',vals:[0.4,0.3,0.1,0.1,0.3,0.6,0.3,0.2,0.2],yoy:3.2},
-  {lvl:3,name:'Transportation services',vals:[0.6,0.5,0.3,-0.3,-0.6,0.3,0.6,0.2,1.4],yoy:2.7},
-  {lvl:3,name:'Medical care services',vals:[0.3,-0.2,0.6,-0.1,0.5,0.0,0.0,0.6,0.3],yoy:2.5},
+  {lvl:0,name:'All items',vals:[0.6,0.4,0.1,-0.4,0.5,0.6,0.9,0.3,0.2,0.3,null,null,0.3,0.3,0.2],yoy:3.7},
+  {lvl:1,name:'Food',vals:[0.0,0.1,0.1,0.2,0.2,0.5,0.0,0.4,0.2,0.7,null,null,0.2,0.4,0.1],yoy:2.5},
+  {lvl:2,name:'Food at home',vals:[-0.1,0.0,-0.1,0.2,0.1,0.7,-0.2,0.4,0.2,0.6,null,null,0.3,0.5,0.0],yoy:1.8},
+  {lvl:2,name:'Food away from home',vals:[0.2,0.3,0.3,0.2,0.3,0.2,0.2,0.3,0.1,0.7,null,null,0.1,0.3,0.3],yoy:3.5},
+  {lvl:1,name:'Energy',vals:[5.2,2.1,-1.5,-5.7,3.9,3.8,10.9,0.6,-1.5,0.3,null,null,1.4,0.7,-0.6],yoy:20.4},
+  {lvl:2,name:'Energy commodities',vals:[9.3,4.2,-2.9,-9.5,6.7,5.6,21.3,1.1,-3.3,-0.3,null,null,3.4,1.6,-1.1],yoy:35.3},
+  {lvl:3,name:'Gasoline (all types)',vals:[9.1,3.9,-2.9,-9.7,7.0,5.4,21.2,0.8,-3.2,-0.3,2.7,-1.3,3.6,1.6,-1.2],yoy:34.2},
+  {lvl:3,name:'Fuel oil',vals:[15.3,10.1,-1.7,-9.2,3.8,5.8,30.7,11.1,-5.7,-0.8,null,null,0.7,0.7,1.0],yoy:74.2},
+  {lvl:2,name:'Energy services',vals:[0.1,-0.4,0.3,-0.7,0.4,1.6,0.4,0.2,0.2,1.0,null,null,-0.4,-0.2,-0.2],yoy:4.6},
+  {lvl:3,name:'Electricity',vals:[0.2,-0.2,0.1,-1.0,0.6,2.1,0.8,-0.7,-0.1,0.2,null,null,-0.3,0.2,0.0],yoy:4.4},
+  {lvl:3,name:'Utility (piped) gas service',vals:[-0.3,-1.1,0.7,0.5,-0.5,-0.1,-0.9,3.1,1.0,3.7,null,null,-0.9,-1.2,-0.6],yoy:5.0},
+  {lvl:1,name:'All items less food and energy',vals:[0.3,0.3,0.2,0.0,0.2,0.4,0.2,0.2,0.3,0.2,null,null,0.2,0.3,0.3],yoy:2.6},
+  {lvl:2,name:'Commodities less food and energy commodities',vals:[0.3,0.1,0.2,-0.1,-0.1,0.0,0.1,0.1,0.0,0.0,null,null,0.2,0.2,0.2],yoy:0.7},
+  {lvl:3,name:'New vehicles',vals:[0.2,0.3,0.1,0.0,-0.3,-0.2,0.1,0.0,0.1,0.0,0.2,0.0,0.2,0.2,0.0],yoy:0.6},
+  {lvl:3,name:'Used cars and trucks',vals:[0.7,0.4,0.4,-0.2,0.1,0.0,-0.4,-0.4,-1.8,-0.9,0.1,0.7,-0.2,0.8,0.5],yoy:-1.5},
+  {lvl:3,name:'Apparel',vals:[0.3,0.0,0.1,-0.6,0.3,0.6,1.0,1.3,0.3,0.3,null,null,0.5,0.3,0.1],yoy:3.4},
+  {lvl:3,name:'Medical care commodities',vals:[-0.7,-0.2,-0.6,-0.2,-0.7,-0.4,-1.0,0.0,-0.1,0.3,null,null,-0.1,-0.3,0.1],yoy:-3.3},
+  {lvl:2,name:'Services less energy services',vals:[0.4,0.3,0.2,0.0,0.3,0.5,0.2,0.3,0.4,0.3,null,null,0.2,0.3,0.4],yoy:3.1},
+  {lvl:3,name:'Shelter',vals:[0.4,0.3,0.1,0.1,0.3,0.6,0.3,0.2,0.2,0.4,null,null,0.2,0.4,0.2],yoy:3.2},
+  {lvl:3,name:'Transportation services',vals:[0.6,0.5,0.3,-0.3,-0.6,0.3,0.6,0.2,1.4,0.4,null,null,0.3,0.9,0.6],yoy:2.7},
+  {lvl:3,name:'Medical care services',vals:[0.3,-0.2,0.6,-0.1,0.5,0.0,0.0,0.6,0.3,0.4,null,null,0.2,-0.1,0.8],yoy:2.5},
 ];
-const DT_SPAN=7;
-function dtFmt(v){return (v>0?'+':'')+v.toFixed(1)+'%';}
-function dtCls(v,latest){return 'dt-num'+(latest?' dt-latest':'')+(v<0?' dt-neg':'');}
-function renderTable(){
-  const wrap=document.getElementById('tableWrap');
-  if(!wrap||wrap.dataset.built)return;
-  wrap.dataset.built='1';
-  const idx=[...Array(Math.min(DT_SPAN,DTMONTHS.length)).keys()].reverse(); // oldest → newest
-  let html='<table class="dt-table"><thead><tr><th class="dt-cat-h"></th>';
-  idx.forEach(i=>{
-    html+=`<th class="dt-month-h${i===0?' dt-latest':''}">${DTMONTHS[i]}</th>`;
-  });
-  html+='<th class="dt-yoy-h dt-yoy">YoY</th></tr></thead><tbody>';
-  DTROWS.forEach(row=>{
-    html+=`<tr><td class="dt-cat-cell lvl${row.lvl}">${escH(row.name)}</td>`;
-    idx.forEach(i=>{
-      html+=`<td class="${dtCls(row.vals[i],i===0)}">${dtFmt(row.vals[i])}</td>`;
-    });
-    html+=`<td class="${dtCls(row.yoy,false)} dt-yoy">${dtFmt(row.yoy)}</td>`;
-    html+='</tr>';
-  });
-  html+='</tbody></table>';
-  wrap.innerHTML=html;
-}
 
+/* 12-month YoY by month (unadjusted), aligned with DTROWS order.
+   Source: Table A / Table 1 of each monthly BLS PDF (Jan-Sep 2026).
+   Add the new month's YoY column here each month. */
+const DT_YOY={
+  "Sep '26":[3.7,2.5,1.8,3.5,20.4,35.3,34.2,74.2,4.6,4.4,5.0,2.6,0.7,0.6,-1.5,3.4,-3.3,3.1,3.2,2.7,2.5],
+  "Aug '26":[3.4,2.7,2.2,3.4,16.3,28.0,27.4,52.0,4.0,3.8,4.4,2.4,0.7,0.6,-2.3,3.6,-2.7,3.0,3.0,2.4,2.5],
+  "Jul '26":[3.4,3.0,2.7,3.4,14.7,24.7,24.6,39.1,4.3,4.2,4.3,2.5,0.8,0.5,-1.9,3.9,-2.7,3.0,3.2,2.9,2.7],
+  "Jun '26":[3.5,3.0,2.7,3.4,15.7,27.1,26.7,42.9,3.9,4.0,3.0,2.6,0.8,0.5,-1.8,3.9,-2.1,3.2,3.3,3.4,2.9],
+  "May '26":[4.2,3.1,2.7,3.5,23.5,40.6,40.5,58.9,5.3,5.9,3.0,2.9,1.1,0.2,-2.0,4.8,-1.8,3.4,3.4,4.1,3.6],
+  "Apr '26":[3.8,3.2,2.9,3.6,17.9,29.2,28.4,54.3,5.4,6.1,3.0,2.8,1.1,0.2,-2.7,4.2,-0.5,3.3,3.3,4.3,3.2],
+  "Mar '26":[3.3,2.7,1.9,3.8,12.5,19.4,18.9,44.2,5.0,4.6,6.4,2.6,1.2,0.5,-3.2,3.4,0.3,3.0,3.0,4.1,3.7],
+  "Feb '26":[2.4,3.1,2.4,3.9,0.5,-5.2,-5.6,6.2,6.3,4.8,10.9,2.5,1.0,0.5,-3.2,2.5,0.1,2.9,3.0,2.2,4.1],
+  "Jan '26":[2.4,2.9,2.1,4.0,-0.1,-7.3,-7.5,-4.2,7.2,6.3,9.8,2.5,1.1,0.4,-2.0,1.7,0.3,2.9,3.0,1.3,3.9],
+};
+/* Panel Table A: last 12 months ending in the panel's month (oldest → newest), YoY at the end. */
+/* Short labels for the table (full BLS name shows as a tooltip on hover) */
+const PT_SHORT={'Gasoline (all types)':'Gasoline','Utility (piped) gas service':'Utility gas',
+  'All items less food and energy':'Core (ex. food & energy)','Commodities less food and energy commodities':'Core goods',
+  'Services less energy services':'Core services','Medical care commodities':'Medical care goods',
+  'Transportation services':'Transport services'};
+function ptName(n){const s=PT_SHORT[n];return s?`<span class="pt-short" title="${escH(n)}">${escH(s)}</span>`:escH(n);}
+const PT_BOLD=new Set(['Food','Energy','All items less food and energy','Energy commodities','Energy services','Commodities less food and energy commodities','Services less energy services']);
+const PT_SHADE={'All items':'0','Food':'1','Energy':'1','All items less food and energy':'1'}; // row shading: dark / light MFO gray
+function ptFmt(v){return v===null||v===undefined?'<span class="pt-na">–</span>':v.toFixed(1);}
+function renderPanelTables(){
+  document.querySelectorAll('.ptab').forEach(el=>{
+    const lab=MDATA[el.dataset.key].label.replace(/ 20(\d\d)$/," '$1");
+    const cur=DTMONTHS.indexOf(lab); if(cur<0)return;
+    const idx=[];for(let i=cur;i<DTMONTHS.length&&idx.length<12;i++)idx.push(i);
+    idx.reverse();
+    const yoy=DT_YOY[lab];
+    // header row 1: one merged cell per year; row 2: month names
+    const groups=[];idx.forEach(i=>{const y='20'+DTMONTHS[i].split(" '")[1];
+      if(groups.length&&groups[groups.length-1].y===y)groups[groups.length-1].n++;else groups.push({y,n:1});});
+    let h='<table class="pt-table"><thead><tr><th class="pt-cat" rowspan="2"></th>';
+    groups.forEach(g=>{h+=`<th class="pt-year" colspan="${g.n}">${g.y}</th>`;});
+    h+=`<th class="pt-yoy pt-yoy-top"></th></tr><tr>`;
+    idx.forEach(i=>{h+=`<th${i===cur?' class="pt-cur"':''}>${DTMONTHS[i].split(" '")[0]}</th>`;});
+    h+=`<th class="pt-yoy">YoY</th></tr></thead><tbody>`;
+    DTROWS.forEach((r,k)=>{
+      const trc=[PT_SHADE[r.name]?'pt-r'+PT_SHADE[r.name]:'',(r.lvl===0||PT_BOLD.has(r.name))?'pt-bold':''].filter(Boolean).join(' ');
+      h+=`<tr${trc?' class="'+trc+'"':''}><td class="pt-cat l${r.lvl}${PT_BOLD.has(r.name)?' pt-b':''}">${ptName(r.name)}</td>`;
+      idx.forEach(i=>{const v=r.vals[i];h+=`<td class="${i===cur?'pt-cur':''}${v!==null&&v<0?' pt-neg':''}">${ptFmt(v)}</td>`;});
+      const y=yoy?yoy[k]:null;
+      h+=`<td class="pt-yoy${y!==null&&y<0?' pt-neg':''}">${ptFmt(y)}</td></tr>`;
+    });
+    h+='</tbody></table><div class="pt-note">Seasonally adjusted % change from the preceding month; YoY: unadjusted 12-month change. Oct and Nov 2025 not available (2025 lapse in appropriations).</div>';
+    el.innerHTML=h;
+  });
+}
 renderMatrix();
-renderTable();
+renderPanelTables();
 </script>
 </body>
 </html>
