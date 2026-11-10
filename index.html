@@ -183,6 +183,7 @@
 .pt-table .pt-neg{color:var(--c)}
 .pt-table .pt-yoy{border-left:1px solid var(--gr4);width:40px}
 .pt-table .pt-na{color:var(--gr3)}
+.pt-star{font-weight:700;color:var(--c);margin-left:1px}
 .pt-note{font-size:9px;line-height:1.35;color:var(--sl);font-style:italic;margin-top:6px}
 .dt-table{border-collapse:collapse;width:auto}
 .dt-table thead th{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#000;padding:8px 4px;text-align:center;vertical-align:middle;white-space:nowrap;border-bottom:1px solid var(--gr4);background:#fff}
@@ -325,7 +326,7 @@
       <div class="exec-t">Executive Summary</div>
       <ul>
         <li><b>The headline index rose 0.4%</b> in October (seasonally adjusted), above the <b>+0.3% expected</b>, after rising 0.6% in September.</li>
-        <li><b>YoY inflation is not available</b> for October: BLS did not collect October 2025 data (2025 lapse in appropriations), so it could not publish 12-month changes.</li>
+        <li><b>YoY inflation is not available</b> for October: BLS did not publish 12-month changes because October 2025 data were not collected during the 2025 government shutdown.</li>
         <li><b>Core inflation rose +0.3%</b> monthly, above the <b>+0.2% expected</b>, as it did in September and August.</li>
         <li><b>Shelter rose +0.3%</b>, accounting for over thirty percent of the monthly increase. <b>Food rose +0.5%</b> and <b>energy +0.7%</b>.</li>
         <li>Next release: <b>December 10, 2026</b> (November data).</li>
@@ -1193,6 +1194,13 @@ const DT_YOY={
   "Feb '26":[2.4,3.1,2.4,3.9,0.5,-5.2,-5.6,6.2,6.3,4.8,10.9,2.5,1.0,0.5,-3.2,2.5,0.1,2.9,3.0,2.2,4.1],
   "Jan '26":[2.4,2.9,2.1,4.0,-0.1,-7.3,-7.5,-4.2,7.2,6.3,9.8,2.5,1.1,0.4,-2.0,1.7,0.3,2.9,3.0,1.3,3.9],
 };
+/* Months whose year-ago month (Oct 2025) was not collected: change vs Sep 2025
+   (13 months), calculated from the BLS unadjusted index levels in Table 1
+   (Sep 2025 index from the Sep 2026 PDF, Oct 2026 index from the Oct 2026 PDF).
+   Only for rows the BLS did not publish (null = BLS published the 12-month change). */
+const DT_YOY13={
+  "Oct '26":{base:'Sep 2025',vals:[3.9,2.9,2.2,4.0,19.9,34.8,null,84.2,4.0,3.6,4.8,2.8,0.6,null,null,2.2,-2.8,3.5,3.4,4.2,2.8]},
+};
 /* Panel Table A: last 12 months ending in the panel's month (oldest → newest), YoY at the end. */
 /* Short labels for the table (full BLS name shows as a tooltip on hover) */
 const PT_SHORT={'Gasoline (all types)':'Gasoline','Utility (piped) gas service':'Utility gas',
@@ -1222,10 +1230,12 @@ function renderPanelTables(){
       const trc=[PT_SHADE[r.name]?'pt-r'+PT_SHADE[r.name]:'',(r.lvl===0||PT_BOLD.has(r.name))?'pt-bold':''].filter(Boolean).join(' ');
       h+=`<tr${trc?' class="'+trc+'"':''}><td class="pt-cat l${r.lvl}${PT_BOLD.has(r.name)?' pt-b':''}">${ptName(r.name)}</td>`;
       idx.forEach(i=>{const v=r.vals[i];h+=`<td class="${i===cur?'pt-cur':''}${v!==null&&v<0?' pt-neg':''}">${ptFmt(v)}</td>`;});
-      const y=yoy?yoy[k]:null;
-      h+=`<td class="pt-yoy${y!==null&&y<0?' pt-neg':''}">${ptFmt(y)}</td></tr>`;
+      let y=yoy?yoy[k]:null,star='';
+      const alt=DT_YOY13[lab];
+      if(y===null&&alt&&alt.vals[k]!==null){y=alt.vals[k];star='<span class="pt-star">*</span>';}
+      h+=`<td class="pt-yoy${y!==null&&y<0?' pt-neg':''}">${ptFmt(y)}${star}</td></tr>`;
     });
-    h+='</tbody></table><div class="pt-note">Seasonally adjusted % change from the preceding month; YoY: unadjusted 12-month change. Oct and Nov 2025 not available (2025 lapse in appropriations)'+(yoy&&yoy.includes(null)?'; YoY not published where the year-ago month is missing':'')+'.</div>';
+    h+='</tbody></table><div class="pt-note">Seasonally adjusted % change from the preceding month; YoY: unadjusted 12-month change. Oct and Nov 2025 not published due to the 2025 government shutdown'+(DT_YOY13[lab]?'.<br>* The BLS did not publish 12-month changes for October 2026 because October 2025 data were not collected during the 2025 government shutdown; shown instead is the change vs '+DT_YOY13[lab].base+' (13 months), calculated from BLS unadjusted index levels. Gasoline, new vehicles and used cars and trucks have no asterisk because they do have October 2025 data, so their 12-month change vs Oct 2025 is the one published by the BLS':(yoy&&yoy.includes(null)?'; YoY not published where the year-ago month is missing':''))+'.</div>';
     el.innerHTML=h;
   });
 }
